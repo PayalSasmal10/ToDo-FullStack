@@ -1,11 +1,12 @@
 import './App.css';
+import ProjectSection from './containers/project-section';
 
 function App() {
-    return (
-        <div className="App">
-            <header className="App-header">Todo Fullstack</header>
-        </div>
-    );
+  return (
+    <div className="App">
+      <ProjectSection />
+    </div>
+  );
 }
 
 export default App;
