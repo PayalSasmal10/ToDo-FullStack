@@ -1,6 +1,51 @@
 .sidenav {
-  width: 25vw;
+  width: 20vw;
   min-height: 100vh;
   background: #ffffff;
   box-shadow: 0 0 5px #d9d9d9, -20px -20px 60px #ffffff;
+  font-size: large;
+  h2 {
+    text-align: center;
+  }
+}
+
+.section1 {
+  margin: 3rem 0;
+}
+
+.section2 {
+  margin: 15rem 0;
+}
+
+.sidenav-section,
+.s2-1 {
+  display: flex;
+  margin: 2rem 5rem;
+  cursor: pointer;
+  span {
+    margin-left: 6px;
+  }
+  span:hover {
+    color: green;
+    background: rgb(240, 240, 240);
+    font-size: 20px;
+    transition: 0.2s;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1400px) {
+  .sidenav {
+    width: 25vw;
+  }
+  .sidenav-section,
+  .s2-1 {
+    margin: 2rem 4rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .sidenav-section,
+  .s2-1 {
+    margin: 2rem 1rem;
+  }
 }
