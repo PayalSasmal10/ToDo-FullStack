@@ -6,7 +6,8 @@
   margin: 0 2rem;
   input {
     background: #fafafa;
-    border: none;
+    border: 1.5px solid grey;
+    border-radius: 3px;
     height: 2rem;
     padding: 0 1.8rem;
   }
@@ -15,10 +16,23 @@
     border: 1px solid #997272;
   }
 
-  nav ul li {
-    list-style: none;
-    display: inline;
-    margin-right: 1rem;
+  @media screen and (max-width: 650px) {
+    input {
+      width: 4rem;
+    }
+  }
+
+  nav {
+    ul {
+      li {
+        list-style: none;
+        display: inline;
+        margin-right: 1rem;
+      }
+      li:last-child {
+        font-weight: bold;
+      }
+    }
   }
 }
 

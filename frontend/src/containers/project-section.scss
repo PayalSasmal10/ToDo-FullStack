@@ -1,4 +1,7 @@
 .project-section {
-  display: grid;
-  grid-template-columns: 1fr 3fr;
+  display: flex;
+}
+
+.main-section {
+  width: 100vw;
 }
