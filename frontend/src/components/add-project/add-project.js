@@ -1,14 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const AddProject = () => {
-  const [projectTitle, setProjectTitle] = useState('');
-  const [projectDescription, setProjectDescription] = useState('');
-
-  const projectTitleHandler = () => {
-    setProjectTitle('My First Task');
-    setProjectDescription('Complete this task by EOD');
-  };
-
+const AddProject = ({ projectTitle, projectDescription }) => {
   return (
     <>
       <h5>{projectTitle}</h5>

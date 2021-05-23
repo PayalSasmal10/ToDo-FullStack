@@ -1,7 +1,6 @@
 .sidenav {
   width: 20vw;
   min-height: 100vh;
-  background: #ffffff;
   box-shadow: 0 0 5px #d9d9d9, -20px -20px 60px #ffffff;
   font-size: large;
   h2 {
@@ -28,7 +27,7 @@
   span:hover {
     color: green;
     background: rgb(240, 240, 240);
-    font-size: 20px;
+    font-weight: 600;
     transition: 0.2s;
   }
 }
