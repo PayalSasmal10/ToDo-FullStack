@@ -1,0 +1,68 @@
+@import '../../../styles/_variables';
+
+.modal {
+  background-color: #fff;
+  border-radius: 0.3rem;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 30vw;
+  min-height: 30vh;
+  transform: translate(-50%, -50%);
+  padding: 0 0.5rem;
+  z-index: 1000;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $overlay;
+  z-index: 1000;
+}
+
+.close-save {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+}
+
+.cancel {
+  margin-right: 3px;
+  background-color: $btnSecondaryColor;
+  border: 1px $btnSecondaryColor;
+}
+
+.save {
+  background-color: $btnPrimaryColor;
+  border: 1px $btnPrimaryColor;
+  color: $secondaryTextColor;
+}
+
+.cancel,
+.save {
+  height: 2rem;
+  border-radius: 3px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.inputElement {
+  border: none;
+  height: 2rem;
+  min-width: 30vw;
+}
+
+.textAreaElement {
+  border: none;
+  resize: none;
+  min-height: 18vh;
+}
+
+.inputElement:focus,
+.textAreaElement:focus {
+  outline: none;
+  resize: none;
+}

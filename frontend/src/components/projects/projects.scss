@@ -4,6 +4,12 @@
   margin: 3rem;
 }
 
+@media screen and (max-height: 768px) {
+  .projects {
+    margin: 0.8rem 3rem;
+  }
+}
+
 .project-header {
   @include flex;
   justify-content: space-between;
