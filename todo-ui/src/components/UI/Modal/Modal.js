@@ -1,10 +1,15 @@
-import { React, useState } from 'react';
+import { React } from 'react';
 import './Modal.scss';
 
-const Modal = ({ open, setOpen }) => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-
+const Modal = ({
+  open,
+  setOpen,
+  title,
+  note,
+  todoTitleHandler,
+  todoNoteHandler,
+  todoSubmitHandler,
+}) => {
   if (!open) {
     return null;
   }
@@ -17,11 +22,15 @@ const Modal = ({ open, setOpen }) => {
             type="text"
             placeholder="Title..."
             className="inputElement"
+            value={title}
+            onChange={todoTitleHandler}
           ></input>
           <hr />
           <textarea
             placeholder="Take note..."
             className="textAreaElement"
+            value={note}
+            onChange={todoNoteHandler}
           ></textarea>
         </div>
         <hr />
@@ -29,11 +38,7 @@ const Modal = ({ open, setOpen }) => {
           <button className="cancel" onClick={() => setOpen(!open)}>
             Cancel
           </button>
-          <button
-            type="submit"
-            className="save"
-            onClick={() => console.log('clicked')}
-          >
+          <button type="submit" className="save" onClick={todoSubmitHandler}>
             Save Changes
           </button>
         </div>

@@ -10,13 +10,20 @@
   }
 }
 
+.filter-time {
+  height: 1.6rem;
+  display: inline;
+}
+
 .project-header {
   @include flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .cards {
-  @extend .project-header;
+  @include flex;
+  justify-content: space-between;
   div {
     background: #f0f0f0;
     width: 20vw;
@@ -31,8 +38,8 @@
 
 .add-task {
   width: 15vw;
-  background: #b9b8b8;
-  border: 1px solid #b9b8b8;
+  background: #d3d3d3;
+  border: 1px solid #d3d3d3;
   cursor: pointer;
   font-size: large;
   border-radius: 0.3rem;
