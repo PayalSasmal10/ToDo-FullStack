@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Modal from '../UI/Modal/Modal';
 import ToDoListBox from '../UI/ToDoListBox/ToDoListBox';
-import './projects.scss';
+import './project-todo.scss';
 
-const Projects = (props) => {
+const ProjectToDo = (props) => {
   const [todoTitle, setTodoTitle] = useState('');
   const [todoNote, setTodoNote] = useState('');
   const [status, setStatus] = useState('todo');
@@ -14,10 +14,10 @@ const Projects = (props) => {
   //   getLocalStorageHandler();
   // }, []);
 
-  useEffect(() => {
-    localStorageHandler();
-    todoListBox();
-  }, [todoValues]);
+  // useEffect(() => {
+  //   // localStorageHandler();
+  //   todoListBoxer();
+  // }, [todoValues]);
 
   // Todo title
   const todoTitleHandler = (e) => {
@@ -46,33 +46,26 @@ const Projects = (props) => {
   };
 
   // Todo values mapping
-  const todoListBox = () => {
-    <div>
-      {todoValues.map((todo) => (
-        <ToDoListBox
-          todoTitle={todo.title}
-          todoNote={todo.note}
-          key={todo.id}
-          status={todo.status}
-        />
-      ))}
-    </div>;
-  };
+  const todoListBox = todoValues.map((todo) => (
+    <ToDoListBox
+      todoTitle={todo.title}
+      todoNote={todo.note}
+      key={todo.id}
+      status={todo.status}
+    />
+  ));
 
   // Save to Local
-  const localStorageHandler = () => {
-    localStorage.setItem('todoValues', JSON.stringify(todoValues));
-  };
+  // const localStorageHandler = () => {
+  //   localStorage.setItem('todoValues', JSON.stringify(todoValues));
+  // };
 
   // Get from Local
   // const getLocalStorageHandler = () => {
   //   if (localStorage.getItem('todoValues') === null) {
   //     localStorage.setItem('todoValues', JSON.stringify([]));
   //   } else {
-  //     let todoLocal = localStorage.getItem(
-  //       'todoValues',
-  //       JSON.stringify(todoValues)
-  //     );
+  //     let todoLocal = JSON.parse(localStorage.getItem(todoValues));
   //     setTodoValues(todoLocal);
   //   }
   // };
@@ -121,4 +114,4 @@ const Projects = (props) => {
   );
 };
 
-export default Projects;
+export default ProjectToDo;
