@@ -1,6 +1,6 @@
 FROM python:3.9.5-alpine3.13
 
-MAINTAINER PAYAL SASMAL "sasmalpayal@gmail.com"
+MAINTAINER "PAYAL SASMAL" "sasmalpayal@gmail.com"
 
 ADD todo-project/requirements.txt /app/requirements.txt
 
