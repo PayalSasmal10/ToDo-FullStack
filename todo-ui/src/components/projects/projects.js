@@ -10,9 +10,9 @@ const Projects = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [todoValues, setTodoValues] = useState([]);
 
-  useEffect(() => {
-    getLocalStorageHandler();
-  }, []);
+  // useEffect(() => {
+  //   getLocalStorageHandler();
+  // }, []);
 
   useEffect(() => {
     localStorageHandler();
@@ -65,17 +65,17 @@ const Projects = (props) => {
   };
 
   // Get from Local
-  const getLocalStorageHandler = () => {
-    if (localStorage.getItem('todoValues') === null) {
-      localStorage.setItem('todoValues', JSON.stringify([]));
-    } else {
-      let todoLocal = localStorage.getItem(
-        'todoValues',
-        JSON.stringify(todoValues)
-      );
-      setTodoValues(todoLocal);
-    }
-  };
+  // const getLocalStorageHandler = () => {
+  //   if (localStorage.getItem('todoValues') === null) {
+  //     localStorage.setItem('todoValues', JSON.stringify([]));
+  //   } else {
+  //     let todoLocal = localStorage.getItem(
+  //       'todoValues',
+  //       JSON.stringify(todoValues)
+  //     );
+  //     setTodoValues(todoLocal);
+  //   }
+  // };
 
   return (
     <div className="projects">
