@@ -14,10 +14,10 @@ const ProjectToDo = (props) => {
   //   getLocalStorageHandler();
   // }, []);
 
-  useEffect(() => {
-    // localStorageHandler();
-    todoListBoxer();
-  }, [todoValues]);
+  // useEffect(() => {
+  //   // localStorageHandler();
+  //   todoListBoxer();
+  // }, [todoValues]);
 
   // Todo title
   const todoTitleHandler = (e) => {
@@ -46,18 +46,14 @@ const ProjectToDo = (props) => {
   };
 
   // Todo values mapping
-  const todoListBoxer = () => {
-    <div>
-      {todoValues.map((todo) => (
-        <ToDoListBox
-          todoTitle={todo.title}
-          todoNote={todo.note}
-          key={todo.id}
-          status={todo.status}
-        />
-      ))}
-    </div>;
-  };
+  const todoListBox = todoValues.map((todo) => (
+    <ToDoListBox
+      todoTitle={todo.title}
+      todoNote={todo.note}
+      key={todo.id}
+      status={todo.status}
+    />
+  ));
 
   // Save to Local
   // const localStorageHandler = () => {
@@ -90,6 +86,7 @@ const ProjectToDo = (props) => {
           <button className="add-task" onClick={() => setIsOpen(true)}>
             +
           </button>
+          {todoListBox}
         </div>
         <div className="inprogress-card">
           <p>In progress</p>
@@ -104,7 +101,6 @@ const ProjectToDo = (props) => {
           </button>
         </div>
       </div>
-      {todoListBoxer}
       <Modal
         open={isOpen}
         setOpen={setIsOpen}
