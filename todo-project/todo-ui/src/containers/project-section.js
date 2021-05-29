@@ -13,7 +13,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Header from '../components/header/header';
 import SideNav from '../components/side-nav/side-nav';
-import Projects from '../components/projects/projects';
+import ProjectToDo from '../components/project-todo/project-todo';
 import './project-section.scss';
 
 library.add(
@@ -34,7 +34,7 @@ const ProjectSection = () => {
       <SideNav />
       <div className="main-section">
         <Header />
-        <Projects />
+        <ProjectToDo />
       </div>
     </div>
   );
