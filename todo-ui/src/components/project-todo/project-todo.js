@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Modal from '../UI/Modal/Modal';
 import ToDoListBox from '../UI/ToDoListBox/ToDoListBox';
-import './projects.scss';
+import './project-todo.scss';
 
-const Projects = (props) => {
+const ProjectToDo = (props) => {
   const [todoTitle, setTodoTitle] = useState('');
   const [todoNote, setTodoNote] = useState('');
   const [status, setStatus] = useState('todo');
@@ -15,8 +15,8 @@ const Projects = (props) => {
   // }, []);
 
   useEffect(() => {
-    localStorageHandler();
-    todoListBox();
+    // localStorageHandler();
+    todoListBoxer();
   }, [todoValues]);
 
   // Todo title
@@ -46,7 +46,7 @@ const Projects = (props) => {
   };
 
   // Todo values mapping
-  const todoListBox = () => {
+  const todoListBoxer = () => {
     <div>
       {todoValues.map((todo) => (
         <ToDoListBox
@@ -60,19 +60,16 @@ const Projects = (props) => {
   };
 
   // Save to Local
-  const localStorageHandler = () => {
-    localStorage.setItem('todoValues', JSON.stringify(todoValues));
-  };
+  // const localStorageHandler = () => {
+  //   localStorage.setItem('todoValues', JSON.stringify(todoValues));
+  // };
 
   // Get from Local
   // const getLocalStorageHandler = () => {
   //   if (localStorage.getItem('todoValues') === null) {
   //     localStorage.setItem('todoValues', JSON.stringify([]));
   //   } else {
-  //     let todoLocal = localStorage.getItem(
-  //       'todoValues',
-  //       JSON.stringify(todoValues)
-  //     );
+  //     let todoLocal = JSON.parse(localStorage.getItem(todoValues));
   //     setTodoValues(todoLocal);
   //   }
   // };
@@ -93,7 +90,6 @@ const Projects = (props) => {
           <button className="add-task" onClick={() => setIsOpen(true)}>
             +
           </button>
-          {todoListBox}
         </div>
         <div className="inprogress-card">
           <p>In progress</p>
@@ -108,6 +104,7 @@ const Projects = (props) => {
           </button>
         </div>
       </div>
+      {todoListBoxer}
       <Modal
         open={isOpen}
         setOpen={setIsOpen}
@@ -121,4 +118,4 @@ const Projects = (props) => {
   );
 };
 
-export default Projects;
+export default ProjectToDo;
