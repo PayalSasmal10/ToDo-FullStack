@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Modal from '../UI/Modal/Modal';
 import ToDoListBox from '../UI/ToDoListBox/ToDoListBox';
+import axios from 'axios';
 import './project-todo.scss';
 
 const ProjectToDo = (props) => {
@@ -10,14 +11,12 @@ const ProjectToDo = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [todoValues, setTodoValues] = useState([]);
 
-  // useEffect(() => {
-  //   getLocalStorageHandler();
-  // }, []);
-
-  // useEffect(() => {
-  //   // localStorageHandler();
-  //   todoListBoxer();
-  // }, [todoValues]);
+  useEffect(() => {
+    axios.get('http://localhost:8000/app/task-list/')
+      .then(response => {
+        setTodoValues(response.data);
+        console.log(response.data)});
+  }, []);
 
   // Todo title
   const todoTitleHandler = (e) => {
@@ -36,39 +35,30 @@ const ProjectToDo = (props) => {
       ...todoValues,
       {
         title: todoTitle,
-        note: todoNote,
+        description: todoNote,
         status: status,
         id: Math.random() * 1000,
       },
     ]);
     setTodoTitle('');
     setTodoNote('');
+    setIsOpen(!isOpen);
   };
 
   // Todo values mapping
   const todoListBox = todoValues.map((todo) => (
     <ToDoListBox
       todoTitle={todo.title}
-      todoNote={todo.note}
+      todoNote={todo.description}
       key={todo.id}
       status={todo.status}
     />
   ));
 
-  // Save to Local
-  // const localStorageHandler = () => {
-  //   localStorage.setItem('todoValues', JSON.stringify(todoValues));
-  // };
-
-  // Get from Local
-  // const getLocalStorageHandler = () => {
-  //   if (localStorage.getItem('todoValues') === null) {
-  //     localStorage.setItem('todoValues', JSON.stringify([]));
-  //   } else {
-  //     let todoLocal = JSON.parse(localStorage.getItem(todoValues));
-  //     setTodoValues(todoLocal);
-  //   }
-  // };
+  const onClickHandler = (param) => {
+    setStatus(param);
+    setIsOpen(!isOpen);
+  }
 
   return (
     <div className="projects">
@@ -83,20 +73,20 @@ const ProjectToDo = (props) => {
       <div className="cards">
         <div className="todo-card">
           <p>To do</p>
-          <button className="add-task" onClick={() => setIsOpen(true)}>
+          <button className="add-task" onClick={() => onClickHandler('todo')}>
             +
           </button>
           {todoListBox}
         </div>
         <div className="inprogress-card">
           <p>In progress</p>
-          <button className="add-task" onClick={() => setIsOpen(true)}>
+          <button className="add-task" onClick={() => onClickHandler('progress')}>
             +
           </button>
         </div>
         <div className="completed-card">
           <p>Completed</p>
-          <button className="add-task" onClick={() => setIsOpen(true)}>
+          <button className="add-task" onClick={() => onClickHandler('completed')}>
             +
           </button>
         </div>

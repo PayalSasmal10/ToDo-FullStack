@@ -12,7 +12,7 @@ def apiOverviews(request):
         'List': '/task-list',
         'Details View': '/task-detail/<str:pk>/',
         'Create': '/task-creation/',
-        'Update': '/task-update/<str:pk>',
+        'Update': '/task-list/<str:pk>',
         'Delete': '/task-delete/<str:pk>',
     }
     return Response(api_urls)
@@ -41,7 +41,7 @@ def taskCreation(request):
     return Response(serializer.data)
 
 
-@api_view(['POST','PUT'])
+@api_view(['POST', 'PUT'])
 def taskUpdate(request, pk):
     task = Task.objects.get(id=pk)
     serializer = TaskSerializer(instance=task, data=request.data)
