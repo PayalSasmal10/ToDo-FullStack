@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Modal from '../UI/Modal/Modal';
 import ToDoListBox from '../UI/ToDoListBox/ToDoListBox';
+import axios from 'axios';
 import './project-todo.scss';
 
 const ProjectToDo = (props) => {
@@ -9,6 +10,13 @@ const ProjectToDo = (props) => {
   const [status, setStatus] = useState('todo');
   const [isOpen, setIsOpen] = useState(false);
   const [todoValues, setTodoValues] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:8000/app/task-list/')
+      .then(response => {
+        setTodoValues(response.data);
+        console.log(response.data)});
+  }, []);
 
   // Todo title
   const todoTitleHandler = (e) => {
@@ -27,7 +35,7 @@ const ProjectToDo = (props) => {
       ...todoValues,
       {
         title: todoTitle,
-        note: todoNote,
+        description: todoNote,
         status: status,
         id: Math.random() * 1000,
       },
@@ -41,7 +49,7 @@ const ProjectToDo = (props) => {
   const todoListBox = todoValues.map((todo) => (
     <ToDoListBox
       todoTitle={todo.title}
-      todoNote={todo.note}
+      todoNote={todo.description}
       key={todo.id}
       status={todo.status}
     />
