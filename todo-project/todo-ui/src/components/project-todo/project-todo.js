@@ -10,15 +10,6 @@ const ProjectToDo = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [todoValues, setTodoValues] = useState([]);
 
-  // useEffect(() => {
-  //   getLocalStorageHandler();
-  // }, []);
-
-  // useEffect(() => {
-  //   // localStorageHandler();
-  //   todoListBoxer();
-  // }, [todoValues]);
-
   // Todo title
   const todoTitleHandler = (e) => {
     setTodoTitle(e.target.value);
@@ -43,6 +34,7 @@ const ProjectToDo = (props) => {
     ]);
     setTodoTitle('');
     setTodoNote('');
+    setIsOpen(!isOpen);
   };
 
   // Todo values mapping
@@ -55,20 +47,10 @@ const ProjectToDo = (props) => {
     />
   ));
 
-  // Save to Local
-  // const localStorageHandler = () => {
-  //   localStorage.setItem('todoValues', JSON.stringify(todoValues));
-  // };
-
-  // Get from Local
-  // const getLocalStorageHandler = () => {
-  //   if (localStorage.getItem('todoValues') === null) {
-  //     localStorage.setItem('todoValues', JSON.stringify([]));
-  //   } else {
-  //     let todoLocal = JSON.parse(localStorage.getItem(todoValues));
-  //     setTodoValues(todoLocal);
-  //   }
-  // };
+  const onClickHandler = (param) => {
+    setStatus(param);
+    setIsOpen(!isOpen);
+  }
 
   return (
     <div className="projects">
@@ -83,20 +65,20 @@ const ProjectToDo = (props) => {
       <div className="cards">
         <div className="todo-card">
           <p>To do</p>
-          <button className="add-task" onClick={() => setIsOpen(true)}>
+          <button className="add-task" onClick={() => onClickHandler('todo')}>
             +
           </button>
           {todoListBox}
         </div>
         <div className="inprogress-card">
           <p>In progress</p>
-          <button className="add-task" onClick={() => setIsOpen(true)}>
+          <button className="add-task" onClick={() => onClickHandler('progress')}>
             +
           </button>
         </div>
         <div className="completed-card">
           <p>Completed</p>
-          <button className="add-task" onClick={() => setIsOpen(true)}>
+          <button className="add-task" onClick={() => onClickHandler('completed')}>
             +
           </button>
         </div>
