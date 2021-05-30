@@ -1,7 +1,3 @@
-from django.shortcuts import render
-from django.contrib.auth.forms import UserCreationForm
-from django.http import JsonResponse
-
 from .models import Task
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -45,7 +41,7 @@ def taskCreation(request):
     return Response(serializer.data)
 
 
-@api_view(['POST'])
+@api_view(['POST','PUT'])
 def taskUpdate(request, pk):
     task = Task.objects.get(id=pk)
     serializer = TaskSerializer(instance=task, data=request.data)
