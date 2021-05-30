@@ -1,15 +1,7 @@
 import { React } from 'react';
 import './Modal.scss';
 
-const Modal = ({
-  open,
-  setOpen,
-  title,
-  note,
-  todoTitleHandler,
-  todoNoteHandler,
-  todoSubmitHandler,
-}) => {
+const Modal = ({ open, setOpen, title, note, todoTitleHandler, todoNoteHandler, todoSubmitHandler }) => {
   if (!open) {
     return null;
   }
