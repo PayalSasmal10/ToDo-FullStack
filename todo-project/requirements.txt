@@ -7,3 +7,4 @@ python-decouple==3.4
 django==3.2
 djangorestframework==3.12.4
 pylint-django==2.4.2
+django-cors-headers==3.3.4
