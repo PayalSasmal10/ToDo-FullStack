@@ -9,39 +9,27 @@ from .serializers import TaskSerializer
 @api_view(['GET'])
 def apiOverviews(request):
     api_urls = {
-        'List': '/task-list',
-        'Details View': '/task-detail/<str:pk>/',
-        'Create': '/task-creation/',
-        'Update': '/task-list/<str:pk>',
+        'List': '/task',
+        'Update': '/task/<str:pk>',
         'Delete': '/task-delete/<str:pk>',
     }
     return Response(api_urls)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def taskList(request):
-    tasks = Task.objects.all().order_by('-id')
-    serializer = TaskSerializer(tasks, many=True)
-    return Response(serializer.data)
+    if request.method == 'GET':
+        tasks = Task.objects.all().order_by('-id')
+        serializer = TaskSerializer(tasks, many=True)
+        return Response(serializer.data)
+    
+    elif request.method == 'POST':
+        serializer = TaskSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        return Response(serializer.data)
 
-
-@api_view(['GET'])
-def taskDetails(request, pk):
-    tasks = Task.objects.get(id=pk)
-    serializer = TaskSerializer(tasks, many=False)
-    return Response(serializer.data)
-
-
-@api_view(['POST'])
-def taskCreation(request):
-    serializer = TaskSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-
-    return Response(serializer.data)
-
-
-@api_view(['POST', 'PUT'])
+@api_view(['PUT'])
 def taskUpdate(request, pk):
     task = Task.objects.get(id=pk)
     serializer = TaskSerializer(instance=task, data=request.data)
