@@ -9,13 +9,16 @@ const ProjectToDo = (props) => {
   const [todoNote, setTodoNote] = useState('');
   const [status, setStatus] = useState('todo');
   const [isOpen, setIsOpen] = useState(false);
-  const [todoValues, setTodoValues] = useState([]);
+  const [todoValues, setTodoValues] = useState(null);
+  const [loading, setLoading] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/app/task-list/')
-      .then(response => {
+    if (!todoValues || loading) {
+      axios.get('http://localhost:8000/app/task').then((response) => {
         setTodoValues(response.data);
-        console.log(response.data)});
+        console.log(response.data);
+      });
+    }
   }, []);
 
   // Todo title
@@ -31,46 +34,44 @@ const ProjectToDo = (props) => {
   // Todo submission handler
   const todoSubmitHandler = (e) => {
     e.preventDefault();
-    // setTodoValues([
-    //   ...todoValues,
-    //   {
-    //     title: todoTitle,
-    //     description: todoNote,
-    //     status: status,
-    //     id: Math.random() * 1000,
-    //   },
-    // ]);
-    axios.post('http://localhost:8000/app/task-list/4')
-      .then(response => {
-        setTodoValues([
-          ...todoValues,
-          {
-            title: todoTitle,
-            description: todoNote,
-            status: status,
-            id: Math.random() * 1000
-          }
-        ])
+
+    axios
+      .post('http://localhost:8000/app/task', {
+        title: todoTitle,
+        description: todoNote,
+        status: status,
       })
+      .then((response) => {
+        console.log(response);
+      });
+    setTodoValues([
+      ...todoValues,
+      { title: todoTitle, description: todoNote, status: status },
+    ]);
+    setLoading(true);
     setTodoTitle('');
     setTodoNote('');
     setIsOpen(!isOpen);
   };
 
   // Todo values mapping
-  const todoListBox = todoValues.map((todo) => (
-    <ToDoListBox
-      todoTitle={todo.title}
-      todoNote={todo.description}
-      key={todo.id}
-      status={todo.status}
-    />
-  ));
+  // const todoListBox = () => {
+  //   if (todoValues) {
+  //     todoValues.map((todo) => (
+  //       <ToDoListBox
+  //         todoTitle={todo.title}
+  //         todoNote={todo.description}
+  //         key={todo.id}
+  //         status={todo.status}
+  //       />
+  //     ));
+  //   }
+  // };
 
   const onClickHandler = (param) => {
     setStatus(param);
     setIsOpen(!isOpen);
-  }
+  };
 
   return (
     <div className="projects">
@@ -88,17 +89,34 @@ const ProjectToDo = (props) => {
           <button className="add-task" onClick={() => onClickHandler('todo')}>
             +
           </button>
-          {todoListBox}
+          {todoValues ? (
+            todoValues.map((todo) => (
+              <ToDoListBox
+                todoTitle={todo.title}
+                todoNote={todo.description}
+                key={todo.id}
+                status={todo.status}
+              />
+            ))
+          ) : (
+            <p>No</p>
+          )}
         </div>
         <div className="inprogress-card">
           <p>In progress</p>
-          <button className="add-task" onClick={() => onClickHandler('progress')}>
+          <button
+            className="add-task"
+            onClick={() => onClickHandler('progress')}
+          >
             +
           </button>
         </div>
         <div className="completed-card">
           <p>Completed</p>
-          <button className="add-task" onClick={() => onClickHandler('completed')}>
+          <button
+            className="add-task"
+            onClick={() => onClickHandler('completed')}
+          >
             +
           </button>
         </div>
