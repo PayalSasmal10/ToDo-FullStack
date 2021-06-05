@@ -31,15 +31,27 @@ const ProjectToDo = (props) => {
   // Todo submission handler
   const todoSubmitHandler = (e) => {
     e.preventDefault();
-    setTodoValues([
-      ...todoValues,
-      {
-        title: todoTitle,
-        description: todoNote,
-        status: status,
-        id: Math.random() * 1000,
-      },
-    ]);
+    // setTodoValues([
+    //   ...todoValues,
+    //   {
+    //     title: todoTitle,
+    //     description: todoNote,
+    //     status: status,
+    //     id: Math.random() * 1000,
+    //   },
+    // ]);
+    axios.post('http://localhost:8000/app/task-list/4')
+      .then(response => {
+        setTodoValues([
+          ...todoValues,
+          {
+            title: todoTitle,
+            description: todoNote,
+            status: status,
+            id: Math.random() * 1000
+          }
+        ])
+      })
     setTodoTitle('');
     setTodoNote('');
     setIsOpen(!isOpen);
