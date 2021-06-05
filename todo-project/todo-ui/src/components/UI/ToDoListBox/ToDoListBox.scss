@@ -1,8 +1,28 @@
 @import '../../../styles/_variables';
 
-.todoListBox {
-  width: inherit-5px;
+/**** box styling for each added task ****/
+.todo,
+.progress,
+.completed {
+  width: inherit-10px;
   height: auto;
-  background-color: #f19e8e;
   margin: 0 0.5rem;
+}
+
+/**** Box shadow for todo box ****/
+.todo {
+  background: #ffd1df;
+  box-shadow: inset 10px 10px 20px #e0dadb, inset -10px -10px 20px #ffffff;
+}
+
+/**** Box shadow for todo box ****/
+.progress {
+  background: #ebf698;
+  box-shadow: inset 10px 10px 20px #c8d181, inset -10px -10px 20px #ffffff;
+}
+
+/**** Box shadow for completed box ****/
+.completed {
+  background: #bdf6fe;
+  box-shadow: inset 10px 10px 20px #b4eaf1, inset -10px -10px 20px #c6ffff;
 }

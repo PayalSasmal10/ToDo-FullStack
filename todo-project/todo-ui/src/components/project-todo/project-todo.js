@@ -54,20 +54,6 @@ const ProjectToDo = (props) => {
     setIsOpen(!isOpen);
   };
 
-  // Todo values mapping
-  // const todoListBox = () => {
-  //   if (todoValues) {
-  //     todoValues.map((todo) => (
-  //       <ToDoListBox
-  //         todoTitle={todo.title}
-  //         todoNote={todo.description}
-  //         key={todo.id}
-  //         status={todo.status}
-  //       />
-  //     ));
-  //   }
-  // };
-
   const onClickHandler = (param) => {
     setStatus(param);
     setIsOpen(!isOpen);
@@ -90,16 +76,20 @@ const ProjectToDo = (props) => {
             +
           </button>
           {todoValues ? (
-            todoValues.map((todo) => (
-              <ToDoListBox
-                todoTitle={todo.title}
-                todoNote={todo.description}
-                key={todo.id}
-                status={todo.status}
-              />
-            ))
+            todoValues.map((todo) => {
+              if (todo.status === 'todo') {
+                return (
+                  <ToDoListBox
+                    todoTitle={todo.title}
+                    todoNote={todo.description}
+                    status={todo.status}
+                    id={todo.id}
+                  />
+                );
+              }
+            })
           ) : (
-            <p>No</p>
+            <p className="guide-label">Start adding your task</p>
           )}
         </div>
         <div className="inprogress-card">
@@ -110,6 +100,22 @@ const ProjectToDo = (props) => {
           >
             +
           </button>
+          {todoValues ? (
+            todoValues.map((todo) => {
+              if (todo.status === 'progress') {
+                return (
+                  <ToDoListBox
+                    todoTitle={todo.title}
+                    todoNote={todo.description}
+                    status={todo.status}
+                    id={todo.id}
+                  />
+                );
+              }
+            })
+          ) : (
+            <p className="guide-label">No task is in progress</p>
+          )}
         </div>
         <div className="completed-card">
           <p>Completed</p>
@@ -119,6 +125,22 @@ const ProjectToDo = (props) => {
           >
             +
           </button>
+          {todoValues ? (
+            todoValues.map((todo) => {
+              if (todo.status === 'completed') {
+                return (
+                  <ToDoListBox
+                    todoTitle={todo.title}
+                    todoNote={todo.description}
+                    status={todo.status}
+                    id={todo.id}
+                  />
+                );
+              }
+            })
+          ) : (
+            <p>No completed tasks</p>
+          )}
         </div>
       </div>
       <Modal
