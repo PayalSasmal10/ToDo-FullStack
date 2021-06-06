@@ -70,8 +70,8 @@ const ProjectToDo = (props) => {
         </select>
       </div>
       <div className="cards">
-        <div className="todo-card">
-          <p>To do</p>
+        <div className="card">
+          <p className="cards-head">TO DO</p>
           <button className="add-task" onClick={() => onClickHandler('todo')}>
             +
           </button>
@@ -84,6 +84,8 @@ const ProjectToDo = (props) => {
                     todoNote={todo.description}
                     status={todo.status}
                     id={todo.id}
+                    open={isOpen}
+                    setOpen={setIsOpen}
                   />
                 );
               }
@@ -92,8 +94,8 @@ const ProjectToDo = (props) => {
             <p className="guide-label">Start adding your task</p>
           )}
         </div>
-        <div className="inprogress-card">
-          <p>In progress</p>
+        <div className="card">
+          <p className="cards-head">IN PROGRESS</p>
           <button
             className="add-task"
             onClick={() => onClickHandler('progress')}
@@ -109,6 +111,8 @@ const ProjectToDo = (props) => {
                     todoNote={todo.description}
                     status={todo.status}
                     id={todo.id}
+                    open={isOpen}
+                    setOpen={setIsOpen}
                   />
                 );
               }
@@ -117,8 +121,8 @@ const ProjectToDo = (props) => {
             <p className="guide-label">No task is in progress</p>
           )}
         </div>
-        <div className="completed-card">
-          <p>Completed</p>
+        <div className="card">
+          <p className="cards-head">COMPLETED</p>
           <button
             className="add-task"
             onClick={() => onClickHandler('completed')}
@@ -134,6 +138,8 @@ const ProjectToDo = (props) => {
                     todoNote={todo.description}
                     status={todo.status}
                     id={todo.id}
+                    open={isOpen}
+                    setOpen={setIsOpen}
                   />
                 );
               }
