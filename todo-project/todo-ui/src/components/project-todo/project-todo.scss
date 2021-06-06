@@ -24,15 +24,17 @@
 .cards {
   @include flex;
   justify-content: space-between;
-  div {
+  .card {
     background: #f0f0f0;
     width: 20vw;
     min-height: 70vh;
     text-align: center;
     border-radius: 1.5rem;
+    padding-bottom: 2rem;
   }
-  p {
+  .cards-head {
     font-weight: bold;
+    opacity: 0.5;
   }
 }
 
@@ -43,4 +45,5 @@
   cursor: pointer;
   font-size: large;
   border-radius: 0.3rem;
+  margin-bottom: 1rem;
 }

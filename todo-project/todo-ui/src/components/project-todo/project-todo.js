@@ -9,13 +9,16 @@ const ProjectToDo = (props) => {
   const [todoNote, setTodoNote] = useState('');
   const [status, setStatus] = useState('todo');
   const [isOpen, setIsOpen] = useState(false);
-  const [todoValues, setTodoValues] = useState([]);
+  const [todoValues, setTodoValues] = useState(null);
+  const [loading, setLoading] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/app/task-list/')
-      .then(response => {
+    if (!todoValues || loading) {
+      axios.get('http://localhost:8000/app/task').then((response) => {
         setTodoValues(response.data);
-        console.log(response.data)});
+        console.log(response.data);
+      });
+    }
   }, []);
 
   // Todo title
@@ -31,34 +34,30 @@ const ProjectToDo = (props) => {
   // Todo submission handler
   const todoSubmitHandler = (e) => {
     e.preventDefault();
-    setTodoValues([
-      ...todoValues,
-      {
+
+    axios
+      .post('http://localhost:8000/app/task', {
         title: todoTitle,
         description: todoNote,
         status: status,
-        id: Math.random() * 1000,
-      },
+      })
+      .then((response) => {
+        console.log(response);
+      });
+    setTodoValues([
+      ...todoValues,
+      { title: todoTitle, description: todoNote, status: status },
     ]);
+    setLoading(true);
     setTodoTitle('');
     setTodoNote('');
     setIsOpen(!isOpen);
   };
 
-  // Todo values mapping
-  const todoListBox = todoValues.map((todo) => (
-    <ToDoListBox
-      todoTitle={todo.title}
-      todoNote={todo.description}
-      key={todo.id}
-      status={todo.status}
-    />
-  ));
-
   const onClickHandler = (param) => {
     setStatus(param);
     setIsOpen(!isOpen);
-  }
+  };
 
   return (
     <div className="projects">
@@ -71,24 +70,83 @@ const ProjectToDo = (props) => {
         </select>
       </div>
       <div className="cards">
-        <div className="todo-card">
-          <p>To do</p>
+        <div className="card">
+          <p className="cards-head">TO DO</p>
           <button className="add-task" onClick={() => onClickHandler('todo')}>
             +
           </button>
-          {todoListBox}
+          {todoValues ? (
+            todoValues.map((todo) => {
+              if (todo.status === 'todo') {
+                return (
+                  <ToDoListBox
+                    todoTitle={todo.title}
+                    todoNote={todo.description}
+                    status={todo.status}
+                    id={todo.id}
+                    open={isOpen}
+                    setOpen={setIsOpen}
+                  />
+                );
+              }
+            })
+          ) : (
+            <p className="guide-label">Start adding your task</p>
+          )}
         </div>
-        <div className="inprogress-card">
-          <p>In progress</p>
-          <button className="add-task" onClick={() => onClickHandler('progress')}>
+        <div className="card">
+          <p className="cards-head">IN PROGRESS</p>
+          <button
+            className="add-task"
+            onClick={() => onClickHandler('progress')}
+          >
             +
           </button>
+          {todoValues ? (
+            todoValues.map((todo) => {
+              if (todo.status === 'progress') {
+                return (
+                  <ToDoListBox
+                    todoTitle={todo.title}
+                    todoNote={todo.description}
+                    status={todo.status}
+                    id={todo.id}
+                    open={isOpen}
+                    setOpen={setIsOpen}
+                  />
+                );
+              }
+            })
+          ) : (
+            <p className="guide-label">No task is in progress</p>
+          )}
         </div>
-        <div className="completed-card">
-          <p>Completed</p>
-          <button className="add-task" onClick={() => onClickHandler('completed')}>
+        <div className="card">
+          <p className="cards-head">COMPLETED</p>
+          <button
+            className="add-task"
+            onClick={() => onClickHandler('completed')}
+          >
             +
           </button>
+          {todoValues ? (
+            todoValues.map((todo) => {
+              if (todo.status === 'completed') {
+                return (
+                  <ToDoListBox
+                    todoTitle={todo.title}
+                    todoNote={todo.description}
+                    status={todo.status}
+                    id={todo.id}
+                    open={isOpen}
+                    setOpen={setIsOpen}
+                  />
+                );
+              }
+            })
+          ) : (
+            <p>No completed tasks</p>
+          )}
         </div>
       </div>
       <Modal
