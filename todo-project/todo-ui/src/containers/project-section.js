@@ -10,6 +10,8 @@ import {
   faCalendar,
   faCog,
   faSignOutAlt,
+  faTrashAlt,
+  faEdit,
 } from '@fortawesome/free-solid-svg-icons';
 import Header from '../components/header/header';
 import SideNav from '../components/side-nav/side-nav';
@@ -25,7 +27,9 @@ library.add(
   faTasks,
   faCalendar,
   faCog,
-  faSignOutAlt
+  faSignOutAlt,
+  faTrashAlt,
+  faEdit
 );
 
 const ProjectSection = () => {
