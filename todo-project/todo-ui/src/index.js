@@ -3,6 +3,32 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import axios from 'axios';
+
+axios.defaults.baseURL = 'http://127.0.0.1:8000/app/';
+axios.defaults.headers.common['Authorization'] = 'AUTH_TOKEN';
+
+axios.interceptors.request.use(
+  (request) => {
+    console.log(request);
+    return request;
+  },
+  (error) => {
+    console.log(error);
+    return Promise.reject(error);
+  }
+);
+
+axios.interceptors.response.use(
+  (response) => {
+    console.log(response);
+    return response;
+  },
+  (error) => {
+    console.log(error);
+    return Promise.reject(error);
+  }
+);
 
 ReactDOM.render(
   <React.StrictMode>

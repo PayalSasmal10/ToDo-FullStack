@@ -9,6 +9,7 @@ const ToDoListBox = ({ todoTitle, todoNote, status, id, open, setOpen }) => {
         <p className="note-title">{todoTitle}</p>
       </main>
       <p className="note-paragraph">{todoNote}</p>
+      <div className="edit-icons"></div>
     </section>
   );
 };

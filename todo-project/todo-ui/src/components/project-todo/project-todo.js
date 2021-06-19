@@ -14,7 +14,7 @@ const ProjectToDo = (props) => {
 
   useEffect(() => {
     if (!todoValues || loading) {
-      axios.get('http://localhost:8000/app/task').then((response) => {
+      axios.get('/task').then((response) => {
         setTodoValues(response.data);
         console.log(response.data);
       });
@@ -36,7 +36,7 @@ const ProjectToDo = (props) => {
     e.preventDefault();
 
     axios
-      .post('http://localhost:8000/app/task', {
+      .post('/task', {
         title: todoTitle,
         description: todoNote,
         status: status,
