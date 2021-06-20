@@ -1,8 +1,23 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 import React from 'react';
 import './ToDoListBox.scss';
 
-const ToDoListBox = ({ todoTitle, todoNote, status, id, open, setOpen }) => {
+const ToDoListBox = ({
+  todoTitle,
+  todoNote,
+  id,
+  open,
+  setOpen,
+  setTodoValues,
+  todoValues,
+}) => {
+  const todoDeleteHandler = () => {
+    axios.delete('/task-delete/' + id).then((response) => {
+      console.log(response);
+    });
+  };
+
   return (
     <section className="todo-listbox" key={id}>
       <main className="task-title">
@@ -16,7 +31,11 @@ const ToDoListBox = ({ todoTitle, todoNote, status, id, open, setOpen }) => {
           className="i-edit"
           onClick={() => setOpen(!open)}
         />
-        <FontAwesomeIcon icon="trash-alt" className="i-trash" />
+        <FontAwesomeIcon
+          icon="trash-alt"
+          className="i-trash"
+          onClick={todoDeleteHandler}
+        />
       </div>
     </section>
   );

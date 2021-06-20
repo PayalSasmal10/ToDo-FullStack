@@ -59,6 +59,8 @@ const ProjectToDo = (props) => {
     setIsOpen(!isOpen);
   };
 
+  console.log(`todoVal ${todoValues}`);
+
   return (
     <div className="projects">
       <div className="project-header">
@@ -86,6 +88,8 @@ const ProjectToDo = (props) => {
                     id={todo.id}
                     open={isOpen}
                     setOpen={setIsOpen}
+                    todoValues={todoValues}
+                    setTodoValues={setTodoValues}
                   />
                 );
               }
@@ -103,7 +107,7 @@ const ProjectToDo = (props) => {
             +
           </button>
           {todoValues ? (
-            todoValues.map((todo) => {
+            todoValues?.map((todo) => {
               if (todo.status === 'progress') {
                 return (
                   <ToDoListBox
@@ -120,6 +124,22 @@ const ProjectToDo = (props) => {
           ) : (
             <p className="guide-label">No task is in progress</p>
           )}
+          {/* {todoValues &&
+            todoValues.length > 0 &&
+            todoValues?.map((todo) => {
+              if (todo.status === 'progress') {
+                return (
+                  <ToDoListBox
+                    todoTitle={todo.title}
+                    todoNote={todo.description}
+                    status={todo.status}
+                    id={todo.id}
+                    open={isOpen}
+                    setOpen={setIsOpen}
+                  />
+                );
+              }
+            })} */}
         </div>
         <div className="card">
           <p className="cards-head">COMPLETED</p>
