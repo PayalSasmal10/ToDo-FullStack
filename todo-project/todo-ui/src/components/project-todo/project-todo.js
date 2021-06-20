@@ -10,7 +10,7 @@ const ProjectToDo = (props) => {
   const [status, setStatus] = useState('todo');
   const [isOpen, setIsOpen] = useState(false);
   const [todoValues, setTodoValues] = useState(null);
-  const [loading, setLoading] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!todoValues || loading) {
@@ -58,8 +58,6 @@ const ProjectToDo = (props) => {
     setStatus(param);
     setIsOpen(!isOpen);
   };
-
-  console.log(`todoVal ${todoValues}`);
 
   return (
     <div className="projects">
