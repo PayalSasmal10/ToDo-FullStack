@@ -27,3 +27,17 @@
   word-wrap: break-word;
   word-break: break-all;
 }
+
+.i-edit,
+.i-trash {
+  margin: 5px;
+  cursor: pointer;
+}
+
+.i-edit {
+  color: rgb(52, 133, 52);
+}
+
+.i-trash {
+  color: rgb(175, 0, 0);
+}
