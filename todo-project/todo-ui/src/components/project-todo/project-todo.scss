@@ -38,8 +38,13 @@
   }
 }
 
+.add-task-div {
+  display: flex;
+  justify-content: center;
+}
+
 .add-task {
-  width: 15vw;
+  width: 25vw;
   background: #d3d3d3;
   border: 1px solid #d3d3d3;
   cursor: pointer;
