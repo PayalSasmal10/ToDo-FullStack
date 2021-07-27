@@ -12,6 +12,7 @@ import {
   faSignOutAlt,
   faTrashAlt,
   faEdit,
+  faPlusSquare,
 } from '@fortawesome/free-solid-svg-icons';
 import Header from '../components/header/header';
 import SideNav from '../components/side-nav/side-nav';
@@ -29,7 +30,8 @@ library.add(
   faCog,
   faSignOutAlt,
   faTrashAlt,
-  faEdit
+  faEdit,
+  faPlusSquare
 );
 
 const ProjectSection = () => {

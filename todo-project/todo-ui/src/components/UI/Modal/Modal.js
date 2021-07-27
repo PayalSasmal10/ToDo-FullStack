@@ -1,7 +1,18 @@
-import { React } from 'react';
+import { React, useState } from 'react';
 import './Modal.scss';
 
-const Modal = ({ open, setOpen, title, note, todoTitleHandler, todoNoteHandler, todoSubmitHandler }) => {
+const Modal = ({
+  open,
+  setOpen,
+  title,
+  note,
+  todoTitleHandler,
+  todoNoteHandler,
+  todoSubmitHandler,
+  todoStatusHandler,
+}) => {
+  const [statusOption] = useState(['todo', 'inprogress', 'completed']);
+
   if (!open) {
     return null;
   }
@@ -24,8 +35,13 @@ const Modal = ({ open, setOpen, title, note, todoTitleHandler, todoNoteHandler, 
             value={note}
             onChange={todoNoteHandler}
           ></textarea>
+          <hr />
+          <select onChange={todoStatusHandler}>
+            {statusOption.map((statuses) => (
+              <option value={statuses}>{statuses}</option>
+            ))}
+          </select>
         </div>
-        <hr />
         <div className="close-save">
           <button className="cancel" onClick={() => setOpen(!open)}>
             Cancel

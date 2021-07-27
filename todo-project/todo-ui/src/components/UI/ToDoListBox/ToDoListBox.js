@@ -12,8 +12,6 @@ const ToDoListBox = ({
   setTodoValues,
   todoValues,
 }) => {
-  console.log('todoVal in box', todoValues);
-
   const todoDeleteHandler = () => {
     axios.delete('/task-delete/' + id).then((response) => {
       console.log(response);

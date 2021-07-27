@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Modal from '../UI/Modal/Modal';
 import ToDoListBox from '../UI/ToDoListBox/ToDoListBox';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './project-todo.scss';
 
 const ProjectToDo = (props) => {
@@ -16,7 +17,6 @@ const ProjectToDo = (props) => {
     if (!todoValues || loading) {
       axios.get('/task').then((response) => {
         setTodoValues(response.data);
-        console.log(response.data);
       });
     }
   }, []);
@@ -29,6 +29,11 @@ const ProjectToDo = (props) => {
   // Todo note
   const todoNoteHandler = (e) => {
     setTodoNote(e.target.value);
+  };
+
+  // Todo status
+  const todoStatusHandler = (e) => {
+    setStatus(e.target.value);
   };
 
   // Todo submission handler
@@ -54,8 +59,7 @@ const ProjectToDo = (props) => {
     setIsOpen(!isOpen);
   };
 
-  const onClickHandler = (param) => {
-    setStatus(param);
+  const onClickHandler = () => {
     setIsOpen(!isOpen);
   };
 
@@ -69,12 +73,15 @@ const ProjectToDo = (props) => {
           <option value="thismonth">This Month</option>
         </select>
       </div>
+      <div className="add-task-div">
+        <button className="add-task" onClick={() => onClickHandler()}>
+          <FontAwesomeIcon icon="plus-square" />
+          &nbsp;Add Task
+        </button>
+      </div>
       <div className="cards">
         <div className="card">
           <p className="cards-head">TO DO</p>
-          <button className="add-task" onClick={() => onClickHandler('todo')}>
-            +
-          </button>
           {todoValues ? (
             todoValues.map((todo) => {
               if (todo.status === 'todo') {
@@ -84,6 +91,7 @@ const ProjectToDo = (props) => {
                     todoNote={todo.description}
                     status={todo.status}
                     id={todo.id}
+                    key={todo.id}
                     open={isOpen}
                     setOpen={setIsOpen}
                     todoValues={todoValues}
@@ -98,20 +106,15 @@ const ProjectToDo = (props) => {
         </div>
         <div className="card">
           <p className="cards-head">IN PROGRESS</p>
-          <button
-            className="add-task"
-            onClick={() => onClickHandler('progress')}
-          >
-            +
-          </button>
           {todoValues ? (
             todoValues?.map((todo) => {
-              if (todo.status === 'progress') {
+              if (todo.status === 'inprogress') {
                 return (
                   <ToDoListBox
                     todoTitle={todo.title}
                     todoNote={todo.description}
                     status={todo.status}
+                    key={todo.id}
                     id={todo.id}
                     open={isOpen}
                     setOpen={setIsOpen}
@@ -122,7 +125,7 @@ const ProjectToDo = (props) => {
           ) : (
             <p className="guide-label">No task is in progress</p>
           )}
-          {/* {todoValues &&
+          {todoValues &&
             todoValues.length > 0 &&
             todoValues?.map((todo) => {
               if (todo.status === 'progress') {
@@ -131,22 +134,17 @@ const ProjectToDo = (props) => {
                     todoTitle={todo.title}
                     todoNote={todo.description}
                     status={todo.status}
+                    key={todo.id}
                     id={todo.id}
                     open={isOpen}
                     setOpen={setIsOpen}
                   />
                 );
               }
-            })} */}
+            })}
         </div>
         <div className="card">
           <p className="cards-head">COMPLETED</p>
-          <button
-            className="add-task"
-            onClick={() => onClickHandler('completed')}
-          >
-            +
-          </button>
           {todoValues ? (
             todoValues.map((todo) => {
               if (todo.status === 'completed') {
@@ -174,6 +172,7 @@ const ProjectToDo = (props) => {
         note={todoNote}
         todoTitleHandler={todoTitleHandler}
         todoNoteHandler={todoNoteHandler}
+        todoStatusHandler={todoStatusHandler}
         todoSubmitHandler={todoSubmitHandler}
       />
     </div>
