@@ -13,11 +13,16 @@ const ProjectToDo = (props) => {
   const [todoValues, setTodoValues] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // Get request
+  const getTodoLists = () => {
+    axios.get('/task').then((response) => {
+      setTodoValues(response.data);
+    });
+  };
+
   useEffect(() => {
     if (!todoValues || loading) {
-      axios.get('/task').then((response) => {
-        setTodoValues(response.data);
-      });
+      getTodoLists();
     }
   }, []);
 
@@ -59,6 +64,7 @@ const ProjectToDo = (props) => {
     setIsOpen(!isOpen);
   };
 
+  // Modal Handler
   const onClickHandler = () => {
     setIsOpen(!isOpen);
   };
@@ -174,6 +180,7 @@ const ProjectToDo = (props) => {
         todoNoteHandler={todoNoteHandler}
         todoStatusHandler={todoStatusHandler}
         todoSubmitHandler={todoSubmitHandler}
+        getTodoLists={getTodoLists}
       />
     </div>
   );
