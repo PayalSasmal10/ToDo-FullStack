@@ -5,21 +5,13 @@
   height: 5rem;
   margin: 0 2rem;
   input {
+    box-sizing: border-box;
     background: #fafafa;
     border: 1.5px solid grey;
-    border-radius: 3px;
+    border-radius: 10px;
     height: 2rem;
     padding: 0 1.8rem;
-  }
-
-  input:focus {
-    border: 1px solid #997272;
-  }
-
-  @media screen and (max-width: 650px) {
-    input {
-      width: 4rem;
-    }
+    outline: none;
   }
 
   nav {
@@ -36,9 +28,21 @@
   }
 }
 
+.search-input:focus {
+  border: 2px solid #997272;
+}
+
 .search {
   .i-search {
     position: absolute;
     padding: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .header {
+    input {
+      width: 4rem;
+    }
   }
 }

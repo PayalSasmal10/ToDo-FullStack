@@ -71,14 +71,6 @@ const ProjectToDo = (props) => {
 
   return (
     <div className="projects">
-      <div className="project-header">
-        <h3>Projects</h3>
-        <select className="filter-time">
-          <option value="today">Today</option>
-          <option value="thisweek">This Week</option>
-          <option value="thismonth">This Month</option>
-        </select>
-      </div>
       <div className="add-task-div">
         <button className="add-task" onClick={() => onClickHandler()}>
           <FontAwesomeIcon icon="plus-square" />
