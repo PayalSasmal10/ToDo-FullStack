@@ -58,6 +58,7 @@ const ProjectToDo = (props) => {
     setTodoTitle('');
     setTodoNote('');
     setIsOpen(!isOpen);
+    setStatus('todo');
   };
 
   // Modal Handler
