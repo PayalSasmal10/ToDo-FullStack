@@ -52,12 +52,8 @@ const ProjectToDo = (props) => {
         status: status,
       })
       .then((response) => {
-        console.log(response);
+        getTodoLists();
       });
-    setTodoValues([
-      ...todoValues,
-      { title: todoTitle, description: todoNote, status: status },
-    ]);
     setLoading(true);
     setTodoTitle('');
     setTodoNote('');

@@ -14,12 +14,9 @@ const ToDoListBox = ({
   // Delete handler
   const todoDeleteHandler = () => {
     axios.delete('/task-delete/' + id).then((response) => {
-      console.log(response);
       getTodoLists();
     });
   };
-
-  console.log(`todo list ${getTodoLists}`);
 
   return (
     <section className="todo-listbox" key={id}>
