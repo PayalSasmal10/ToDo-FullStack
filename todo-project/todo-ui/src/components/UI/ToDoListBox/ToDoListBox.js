@@ -9,16 +9,17 @@ const ToDoListBox = ({
   id,
   open,
   setOpen,
-  setTodoValues,
-  todoValues,
+  getTodoLists,
 }) => {
+  // Delete handler
   const todoDeleteHandler = () => {
     axios.delete('/task-delete/' + id).then((response) => {
       console.log(response);
-      // let newData = todoValues.filter((item) => item.id !== response.data.id);
-      // setTodoValues(newData);
+      getTodoLists();
     });
   };
+
+  console.log(`todo list ${getTodoLists}`);
 
   return (
     <section className="todo-listbox" key={id}>

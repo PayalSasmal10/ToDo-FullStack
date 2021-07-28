@@ -13,11 +13,16 @@ const ProjectToDo = (props) => {
   const [todoValues, setTodoValues] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // Get request
+  const getTodoLists = () => {
+    axios.get('/task').then((response) => {
+      setTodoValues(response.data);
+    });
+  };
+
   useEffect(() => {
     if (!todoValues || loading) {
-      axios.get('/task').then((response) => {
-        setTodoValues(response.data);
-      });
+      getTodoLists();
     }
   }, []);
 
@@ -59,20 +64,13 @@ const ProjectToDo = (props) => {
     setIsOpen(!isOpen);
   };
 
+  // Modal Handler
   const onClickHandler = () => {
     setIsOpen(!isOpen);
   };
 
   return (
     <div className="projects">
-      <div className="project-header">
-        <h3>Projects</h3>
-        <select className="filter-time">
-          <option value="today">Today</option>
-          <option value="thisweek">This Week</option>
-          <option value="thismonth">This Month</option>
-        </select>
-      </div>
       <div className="add-task-div">
         <button className="add-task" onClick={() => onClickHandler()}>
           <FontAwesomeIcon icon="plus-square" />
@@ -96,6 +94,7 @@ const ProjectToDo = (props) => {
                     setOpen={setIsOpen}
                     todoValues={todoValues}
                     setTodoValues={setTodoValues}
+                    getTodoLists={getTodoLists}
                   />
                 );
               }
@@ -118,6 +117,7 @@ const ProjectToDo = (props) => {
                     id={todo.id}
                     open={isOpen}
                     setOpen={setIsOpen}
+                    getTodoLists={getTodoLists}
                   />
                 );
               }
@@ -125,23 +125,6 @@ const ProjectToDo = (props) => {
           ) : (
             <p className="guide-label">No task is in progress</p>
           )}
-          {todoValues &&
-            todoValues.length > 0 &&
-            todoValues?.map((todo) => {
-              if (todo.status === 'progress') {
-                return (
-                  <ToDoListBox
-                    todoTitle={todo.title}
-                    todoNote={todo.description}
-                    status={todo.status}
-                    key={todo.id}
-                    id={todo.id}
-                    open={isOpen}
-                    setOpen={setIsOpen}
-                  />
-                );
-              }
-            })}
         </div>
         <div className="card">
           <p className="cards-head">COMPLETED</p>
@@ -153,9 +136,11 @@ const ProjectToDo = (props) => {
                     todoTitle={todo.title}
                     todoNote={todo.description}
                     status={todo.status}
+                    key={todo.id}
                     id={todo.id}
                     open={isOpen}
                     setOpen={setIsOpen}
+                    getTodoLists={getTodoLists}
                   />
                 );
               }

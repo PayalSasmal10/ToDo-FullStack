@@ -11,8 +11,6 @@ const Modal = ({
   todoSubmitHandler,
   todoStatusHandler,
 }) => {
-  const [statusOption] = useState(['todo', 'inprogress', 'completed']);
-
   if (!open) {
     return null;
   }
@@ -37,9 +35,9 @@ const Modal = ({
           ></textarea>
           <hr />
           <select onChange={todoStatusHandler}>
-            {statusOption.map((statuses) => (
-              <option value={statuses}>{statuses}</option>
-            ))}
+            <option value="todo">To Do</option>
+            <option value="inprogress">In Progress</option>
+            <option value="completed">Completed</option>
           </select>
         </div>
         <div className="close-save">
