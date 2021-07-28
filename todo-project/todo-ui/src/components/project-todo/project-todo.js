@@ -133,24 +133,6 @@ const ProjectToDo = (props) => {
           ) : (
             <p className="guide-label">No task is in progress</p>
           )}
-          {todoValues &&
-            todoValues.length > 0 &&
-            todoValues?.map((todo) => {
-              if (todo.status === 'progress') {
-                return (
-                  <ToDoListBox
-                    todoTitle={todo.title}
-                    todoNote={todo.description}
-                    status={todo.status}
-                    key={todo.id}
-                    id={todo.id}
-                    open={isOpen}
-                    getTodoLists={getTodoLists}
-                    setOpen={setIsOpen}
-                  />
-                );
-              }
-            })}
         </div>
         <div className="card">
           <p className="cards-head">COMPLETED</p>
@@ -162,6 +144,7 @@ const ProjectToDo = (props) => {
                     todoTitle={todo.title}
                     todoNote={todo.description}
                     status={todo.status}
+                    key={todo.id}
                     id={todo.id}
                     open={isOpen}
                     setOpen={setIsOpen}
