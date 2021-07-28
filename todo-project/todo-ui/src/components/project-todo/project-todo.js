@@ -102,6 +102,7 @@ const ProjectToDo = (props) => {
                     setOpen={setIsOpen}
                     todoValues={todoValues}
                     setTodoValues={setTodoValues}
+                    getTodoLists={getTodoLists}
                   />
                 );
               }
@@ -124,6 +125,7 @@ const ProjectToDo = (props) => {
                     id={todo.id}
                     open={isOpen}
                     setOpen={setIsOpen}
+                    getTodoLists={getTodoLists}
                   />
                 );
               }
@@ -143,6 +145,7 @@ const ProjectToDo = (props) => {
                     key={todo.id}
                     id={todo.id}
                     open={isOpen}
+                    getTodoLists={getTodoLists}
                     setOpen={setIsOpen}
                   />
                 );
@@ -162,6 +165,7 @@ const ProjectToDo = (props) => {
                     id={todo.id}
                     open={isOpen}
                     setOpen={setIsOpen}
+                    getTodoLists={getTodoLists}
                   />
                 );
               }
@@ -180,7 +184,6 @@ const ProjectToDo = (props) => {
         todoNoteHandler={todoNoteHandler}
         todoStatusHandler={todoStatusHandler}
         todoSubmitHandler={todoSubmitHandler}
-        getTodoLists={getTodoLists}
       />
     </div>
   );
