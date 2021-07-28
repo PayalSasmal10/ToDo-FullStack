@@ -2,12 +2,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
   height: 5rem;
   margin: 0 2rem;
   input {
     box-sizing: border-box;
     background: #fafafa;
-    border: 1.5px solid grey;
+    border: none;
     border-radius: 10px;
     height: 2rem;
     padding: 0 1.8rem;
@@ -28,8 +29,12 @@
   }
 }
 
+.search-input:hover {
+  border: 1px solid #997272;
+}
+
 .search-input:focus {
-  border: 2px solid #997272;
+  border: 1px solid #997272;
 }
 
 .search {

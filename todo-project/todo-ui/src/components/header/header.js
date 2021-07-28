@@ -9,7 +9,7 @@ const Header = (props) => {
     <div className="header">
       <div className="search">
         <FontAwesomeIcon icon="search" className="i-search" />
-        <input placeholder="search" className="search-input"></input>
+        <input placeholder="Search" className="search-input"></input>
       </div>
       <div className="nav-section">
         <nav className="nav">
