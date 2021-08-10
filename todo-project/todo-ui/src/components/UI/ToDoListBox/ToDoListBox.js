@@ -18,6 +18,11 @@ const ToDoListBox = ({
     });
   };
 
+  // List update handler
+  const listUpdateHandler = (id) => {
+    setOpen(!open);
+  };
+
   return (
     <section className="todo-listbox" key={id}>
       <main className="task-title">
@@ -29,7 +34,7 @@ const ToDoListBox = ({
         <FontAwesomeIcon
           icon="edit"
           className="i-edit"
-          onClick={() => setOpen(!open)}
+          onClick={() => listUpdateHandler(id)}
         />
         <FontAwesomeIcon
           icon="trash-alt"

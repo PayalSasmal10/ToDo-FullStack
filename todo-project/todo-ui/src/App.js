@@ -1,10 +1,17 @@
 import './App.css';
-import ProjectSection from './containers/project-section';
+import { Route } from 'react-router-dom';
+import LoginPage from './pages/login-page';
+import ProjectSection from './pages/project-section';
 
 function App() {
   return (
     <div className="App">
-      <ProjectSection />
+      <Route path="/">
+        <LoginPage />
+      </Route>
+      <Route path="/task">
+        <ProjectSection />
+      </Route>
     </div>
   );
 }
