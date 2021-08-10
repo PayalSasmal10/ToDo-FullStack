@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import axios from 'axios';
+import './index.css';
 
 axios.defaults.baseURL = 'http://127.0.0.1:8000/app/';
 axios.defaults.headers.common['Authorization'] = 'AUTH_TOKEN';
@@ -32,7 +33,9 @@ axios.interceptors.response.use(
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
