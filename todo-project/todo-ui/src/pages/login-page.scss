@@ -1,0 +1,50 @@
+.loginPage {
+  display: flex;
+}
+
+.login-section {
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h2 {
+    margin-bottom: 3rem;
+  }
+}
+
+.brand-section {
+  img {
+    width: 50vw;
+    height: 99.6vh;
+  }
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-input {
+  width: 20rem;
+  height: 2rem;
+  outline: none;
+  border-radius: 3rem;
+  padding: 0 1rem;
+}
+
+.submitBtn {
+  width: 22rem;
+  height: 2rem;
+  border-radius: 3rem;
+  cursor: pointer;
+  background: rgb(76, 76, 252);
+  border: none;
+  color: white;
+}
+
+.submitBtn:hover {
+  background: blue;
+}
