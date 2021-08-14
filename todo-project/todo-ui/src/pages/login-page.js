@@ -30,7 +30,7 @@ const LoginPage = () => {
             placeholder="mail@website.com"
             value={userName}
             onChange={(e) => userNameHandler(e)}
-            className="form-input"
+            className="form-email"
           />
           <br />
           <label>Password*</label>
@@ -40,7 +40,7 @@ const LoginPage = () => {
             placeholder="Min. 8 character"
             value={password}
             onChange={(e) => passwordHandler(e)}
-            className="form-input"
+            className="form-pwd"
           />
           <br />
           <input type="checkbox" name="remember" />
