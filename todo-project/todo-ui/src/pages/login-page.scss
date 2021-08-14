@@ -1,3 +1,13 @@
+@mixin formInput {
+  width: 22rem;
+  height: 2.5rem;
+  outline: none;
+  border-radius: 3rem;
+  padding: 0 1rem;
+  border: 1px solid grey;
+  box-sizing: border-box;
+}
+
 .loginPage {
   display: flex;
 }
@@ -8,6 +18,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-weight: 600;
 
   h2 {
     margin-bottom: 3rem;
@@ -27,17 +38,25 @@
   align-items: center;
 }
 
-.form-input {
-  width: 20rem;
-  height: 2rem;
-  outline: none;
-  border-radius: 3rem;
-  padding: 0 1rem;
+.form-email {
+  @include formInput();
+  margin-bottom: 1rem;
+}
+
+.form-pwd {
+  @include formInput();
+  margin-bottom: 1rem;
+}
+
+.form-email:focus,
+.form-pwd:focus {
+  border: 2px solid grey;
 }
 
 .submitBtn {
+  margin-top: 1rem;
   width: 22rem;
-  height: 2rem;
+  height: 2.5rem;
   border-radius: 3rem;
   cursor: pointer;
   background: rgb(76, 76, 252);
