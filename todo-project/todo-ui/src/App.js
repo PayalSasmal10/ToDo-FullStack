@@ -6,7 +6,7 @@ import ProjectSection from './pages/project-section';
 function App() {
   return (
     <div className="App">
-      <Route path="/">
+      <Route path="/" exact>
         <LoginPage />
       </Route>
       <Route path="/task">
