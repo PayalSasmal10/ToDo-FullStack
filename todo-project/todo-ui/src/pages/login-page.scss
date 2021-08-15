@@ -12,7 +12,9 @@
 
 /** Login Page **/
 .loginPage {
+  min-height: 100vh;
   display: flex;
+  align-items: center;
 }
 
 /** Login section **/
@@ -31,10 +33,36 @@
 
 /** Right part image branding **/
 .brand-section {
-  img {
-    width: 50vw;
-    height: 99.6vh;
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
+  min-width: 50vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #000;
+
+  h2 {
+    font-family: 'Caveat', cursive;
+    font-size: 70px;
   }
+}
+
+.multicolortext {
+  background-image: linear-gradient(
+    to left,
+    violet,
+    indigo,
+    green,
+    blue,
+    yellow,
+    orange,
+    red
+  );
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /** Form styling **/

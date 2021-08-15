@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Login from '../components/login/login';
 import SignUp from '../components/sign-up/sign-up';
-import task from '../images/task-tracker.png';
 import './login-page.scss';
 
 const LoginPage = () => {
@@ -18,7 +17,10 @@ const LoginPage = () => {
         )}
       </div>
       <div className="brand-section">
-        <img src={task} alt="Task Tracker" />
+        {/* <img src={task} alt="Task Tracker" /> */}
+        <h2 className="multicolortext">TASK</h2>
+        <h2 className="multicolortext">TRACKER</h2>
+        #stars #stars2 #stars3
       </div>
     </div>
   );

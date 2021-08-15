@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const SignUp = ({ loginSwitch, setLoginSwitch }) => {
   const [email, setEmail] = useState('');
@@ -15,7 +15,7 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
   const passwordValid = password.trim() !== '' && password.length >= 8;
   const passwordIsInvalid = !passwordValid && passwordTouched;
   // Name validation
-  const nameValid = name.trim() !== '' && typeof name === 'string';
+  const nameValid = name.trim() !== '';
   const nameIsInvalid = !nameValid && nameTouched;
 
   // Complete form validation
