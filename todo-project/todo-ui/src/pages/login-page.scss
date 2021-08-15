@@ -6,6 +6,7 @@
   padding: 0 1rem;
   border: 1px solid grey;
   box-sizing: border-box;
+  margin-bottom: 1rem;
 }
 
 .loginPage {
@@ -40,12 +41,14 @@
 
 .form-email {
   @include formInput();
-  margin-bottom: 1rem;
 }
 
 .form-pwd {
   @include formInput();
-  margin-bottom: 1rem;
+}
+
+.form-name {
+  @include formInput();
 }
 
 .form-email:focus,
