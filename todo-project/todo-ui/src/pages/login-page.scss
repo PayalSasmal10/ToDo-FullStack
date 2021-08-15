@@ -1,3 +1,4 @@
+/** Form Input Mixin **/
 @mixin formInput {
   width: 22rem;
   height: 2.5rem;
@@ -9,10 +10,12 @@
   margin-bottom: 1rem;
 }
 
+/** Login Page **/
 .loginPage {
   display: flex;
 }
 
+/** Login section **/
 .login-section {
   width: 50vw;
   display: flex;
@@ -26,6 +29,7 @@
   }
 }
 
+/** Right part image branding **/
 .brand-section {
   img {
     width: 50vw;
@@ -33,6 +37,7 @@
   }
 }
 
+/** Form styling **/
 .form {
   display: flex;
   justify-content: center;
@@ -56,11 +61,9 @@
   border: 2px solid #ccc;
 }
 
-.form-email.invalid {
-  border: 2px solid rgb(207, 2, 2);
-}
-
-.form-pwd.invalid {
+.form-email.invalid,
+.form-pwd.invalid,
+.form-name.invalid {
   border: 2px solid rgb(207, 2, 2);
 }
 

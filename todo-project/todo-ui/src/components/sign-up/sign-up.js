@@ -4,23 +4,29 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
   const [email, setEmail] = useState('');
   const [emailTouched, setEmailTouched] = useState(false);
   const [password, setPassword] = useState('');
+  const [passwordTouched, setPasswordTouched] = useState(false);
   const [name, setName] = useState('');
+  const [nameTouched, setNameTouched] = useState(false);
 
-  const emailValid = email.trim() !== '';
-  const emailInputIsValid = !emailValid && emailTouched;
+  // Email validation
+  const emailValid = email.trim() !== '' && email.includes('@');
+  const emailInputIsInvalid = !emailValid && emailTouched;
+  // Password validation
+  const passwordValid = password.trim() !== '' && password.length >= 8;
+  const passwordIsInvalid = !passwordValid && passwordTouched;
+  // Name validation
+  const nameValid = name.trim() !== '' && typeof name === 'string';
+  const nameIsInvalid = !nameValid && nameTouched;
 
-  useEffect(() => {
-    if (emailValid) {
-    }
-  }, [emailValid]);
+  // Complete form validation
+  let formIsValid = false;
+  if (nameValid && emailValid && passwordValid) {
+    formIsValid = true;
+  }
 
   // Input Handler
   const emailHandler = (event) => {
     setEmail(event.target.value);
-  };
-
-  const emailBlurHandler = () => {
-    setEmailTouched(true);
   };
 
   const passwordHandler = (e) => {
@@ -31,9 +37,34 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
     setName(e.target.value);
   };
 
+  // Blur handler
+  const emailBlurHandler = () => {
+    setEmailTouched(true);
+  };
+
+  const passwordBlurHandler = () => {
+    setPasswordTouched(true);
+  };
+
+  const nameBlurHandler = () => {
+    setNameTouched(true);
+  };
+
+  // Submission handler
   const signupHandler = (event) => {
     event.preventDefault();
   };
+
+  // Conditionally setting classname for making the form interactive via styling
+  const emailInputClass = emailInputIsInvalid
+    ? 'form-email invalid'
+    : 'form-email';
+
+  const passwordInputClass = passwordIsInvalid
+    ? 'form-pwd invalid'
+    : 'form-pwd';
+
+  const nameInputClass = nameIsInvalid ? 'form-name invalid' : 'form-name';
 
   return (
     <>
@@ -48,7 +79,8 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
           placeholder="Name"
           value={name}
           onChange={(e) => nameHandler(e)}
-          className="form-name"
+          onBlur={nameBlurHandler}
+          className={nameInputClass}
         />
         <br />
         <label htmlFor="email">Email*</label>
@@ -59,7 +91,8 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
           placeholder="mail@website.com"
           value={email}
           onChange={(e) => emailHandler(e)}
-          className="form-email"
+          onBlur={emailBlurHandler}
+          className={emailInputClass}
         />
         <br />
         <label htmlFor="password">Password*</label>
@@ -70,10 +103,11 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
           placeholder="Min. 8 character"
           value={password}
           onChange={(e) => passwordHandler(e)}
-          className="form-pwd"
+          onBlur={passwordBlurHandler}
+          className={passwordInputClass}
         />
         <br />
-        <button type="submit" className="submitBtn">
+        <button type="submit" className="submitBtn" disabled={!formIsValid}>
           Sign Up
         </button>
       </form>
