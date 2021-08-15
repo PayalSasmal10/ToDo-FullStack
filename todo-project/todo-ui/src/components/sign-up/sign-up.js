@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const SignUp = ({ loginSwitch, setLoginSwitch }) => {
   const [email, setEmail] = useState('');
@@ -8,6 +8,11 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
 
   const emailValid = email.trim() !== '';
   const emailInputIsValid = !emailValid && emailTouched;
+
+  useEffect(() => {
+    if (emailValid) {
+    }
+  }, [emailValid]);
 
   // Input Handler
   const emailHandler = (event) => {

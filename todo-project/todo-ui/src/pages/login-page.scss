@@ -4,7 +4,7 @@
   outline: none;
   border-radius: 3rem;
   padding: 0 1rem;
-  border: 1px solid grey;
+  border: 1px solid #ccc;
   box-sizing: border-box;
   margin-bottom: 1rem;
 }
@@ -53,7 +53,15 @@
 
 .form-email:focus,
 .form-pwd:focus {
-  border: 2px solid grey;
+  border: 2px solid #ccc;
+}
+
+.form-email.invalid {
+  border: 2px solid rgb(207, 2, 2);
+}
+
+.form-pwd.invalid {
+  border: 2px solid rgb(207, 2, 2);
 }
 
 .submitBtn {
@@ -69,6 +77,13 @@
 
 .submitBtn:hover {
   background: blue;
+}
+
+button:disabled,
+button:disabled:hover,
+button:disabled:active {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
 .span-switch {

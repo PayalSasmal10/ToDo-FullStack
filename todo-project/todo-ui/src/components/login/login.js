@@ -1,37 +1,64 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Login = ({ loginSwitch, setLoginSwitch }) => {
   const [email, setEmail] = useState('');
   const [emailTouched, setEmailTouched] = useState(false);
   const [password, setPassword] = useState('');
+  const [passwordTouched, setPasswordTouched] = useState(false);
 
-  const emailValid = email.trim() !== '';
-  const emailInputIsValid = !emailValid && emailTouched;
+  // Email validation
+  const emailValid = email.trim() !== '' && email.includes('@');
+  const emailInputIsInvalid = !emailValid && emailTouched;
+  // Password validation
+  const passwordValid = password.trim() !== '' && password.length >= 8;
+  const passwordIsInvalid = !passwordValid && passwordTouched;
+
+  let formIsValid = false;
+
+  if (emailValid && passwordValid) {
+    formIsValid = true;
+  }
 
   // Input Handler
   const emailHandler = (event) => {
     setEmail(event.target.value);
   };
 
+  const passwordHandler = (e) => {
+    setPassword(e.target.value);
+  };
+
+  // Blur Handler
   const emailBlurHandler = () => {
     setEmailTouched(true);
   };
 
-  const passwordHandler = (e) => {
-    setPassword(e.target.value);
+  const passwordBlurHandler = () => {
+    setPasswordTouched(true);
   };
 
   // Submission Handler
   const loginHandler = (event) => {
     event.preventDefault();
-    console.log(email);
 
     setEmailTouched(true);
 
     if (!emailValid) {
       return;
     }
+    console.log(email);
+    setEmail('');
+    setEmailTouched(false);
   };
+
+  // Conditionally setting classname for making the form interactive via styling
+  const emailInputClass = emailInputIsInvalid
+    ? 'form-email invalid'
+    : 'form-email';
+
+  const passwordInputClass = passwordIsInvalid
+    ? 'form-pwd invalid'
+    : 'form-pwd';
 
   return (
     <>
@@ -46,7 +73,8 @@ const Login = ({ loginSwitch, setLoginSwitch }) => {
           placeholder="mail@website.com"
           value={email}
           onChange={emailHandler}
-          className="form-email"
+          onBlur={emailBlurHandler}
+          className={emailInputClass}
         />
         <br />
         <label htmlFor="password">Password*</label>
@@ -56,14 +84,15 @@ const Login = ({ loginSwitch, setLoginSwitch }) => {
           name="password"
           placeholder="Min. 8 character"
           value={password}
-          onChange={(e) => passwordHandler(e)}
-          className="form-pwd"
+          onChange={passwordHandler}
+          onBlur={passwordBlurHandler}
+          className={passwordInputClass}
         />
         <br />
         <input type="checkbox" name="remember" />
         <label htmlFor="remember">Remember me</label>
         <br />
-        <button type="submit" className="submitBtn">
+        <button type="submit" className="submitBtn" disabled={!formIsValid}>
           Login
         </button>
       </form>
