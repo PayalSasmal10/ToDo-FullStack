@@ -1,7 +1,9 @@
 from .models import Task
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .serializers import TaskSerializer
+from .serializers import TaskSerializer, UserSerializer, RegisterSerializer
+from rest_framework import generics, permissions
+from knox.models import AuthToken
 
 # Create your views here.
 
@@ -46,10 +48,21 @@ def taskUpdate(request, pk):
 
 
 
-
 @api_view(['DELETE'])
 def taskDelete(request, pk):
     task = Task.objects.get(id=pk)
     task.delete()
 
     return Response('Successfully deleted')
+
+class RegisterApiView(generics.GenericAPIView):
+    serializer_class = RegisterSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response({
+            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+            "token": AuthToken.objects.create(user)[1]
+        })
