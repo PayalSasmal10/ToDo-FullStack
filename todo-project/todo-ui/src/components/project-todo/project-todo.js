@@ -12,6 +12,7 @@ const ProjectToDo = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [todoValues, setTodoValues] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [dragCardId, setDragCardId] = useState();
 
   // Get request
   const getTodoLists = () => {
@@ -66,6 +67,45 @@ const ProjectToDo = (props) => {
     setIsOpen(!isOpen);
   };
 
+  // Drag and Drop Handler
+  const drag = (e) => {
+    console.log(`targetID: ${e.target.id}`);
+    e.dataTransfer.setData('text', e.target.id);
+    setDragCardId(e.target.id);
+  };
+
+  const drop = (e) => {
+    e.preventDefault();
+    let data = e.dataTransfer.getData('text');
+    e.target.appendChild(document.getElementById(data));
+    let cardNum = e.target.id;
+
+    // Getting the task value using id and then updating the status of that task after element is dropped to another section
+    setTimeout(() => {
+      axios.get(`/task/${dragCardId}`).then((response) => {
+        axios
+          .put(`/task/${dragCardId}`, {
+            id: dragCardId,
+            title: response.data.title,
+            description: response.data.description,
+            status:
+              cardNum === 'card1'
+                ? 'todo'
+                : cardNum === 'card2'
+                ? 'inprogress'
+                : 'completed',
+          })
+          .then((response) => {
+            console.log('Data Updated');
+          });
+      });
+    }, 1000);
+  };
+
+  const dragOver = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className="projects">
       <div className="add-task-div">
@@ -75,7 +115,7 @@ const ProjectToDo = (props) => {
         </button>
       </div>
       <div className="cards">
-        <div className="card">
+        <div className="card" id="card1" onDrop={drop} onDragOver={dragOver}>
           <p className="cards-head">TO DO</p>
           {todoValues ? (
             todoValues.map((todo) => {
@@ -92,6 +132,7 @@ const ProjectToDo = (props) => {
                     todoValues={todoValues}
                     setTodoValues={setTodoValues}
                     getTodoLists={getTodoLists}
+                    drag={drag}
                   />
                 );
               }
@@ -100,7 +141,7 @@ const ProjectToDo = (props) => {
             <p className="guide-label">Start adding your task</p>
           )}
         </div>
-        <div className="card">
+        <div className="card" id="card2" onDrop={drop} onDragOver={dragOver}>
           <p className="cards-head">IN PROGRESS</p>
           {todoValues ? (
             todoValues?.map((todo) => {
@@ -115,6 +156,7 @@ const ProjectToDo = (props) => {
                     open={isOpen}
                     setOpen={setIsOpen}
                     getTodoLists={getTodoLists}
+                    drag={drag}
                   />
                 );
               }
@@ -123,7 +165,7 @@ const ProjectToDo = (props) => {
             <p className="guide-label">No task is in progress</p>
           )}
         </div>
-        <div className="card">
+        <div className="card" id="card3" onDrop={drop} onDragOver={dragOver}>
           <p className="cards-head">COMPLETED</p>
           {todoValues ? (
             todoValues.map((todo) => {
@@ -138,6 +180,7 @@ const ProjectToDo = (props) => {
                     open={isOpen}
                     setOpen={setIsOpen}
                     getTodoLists={getTodoLists}
+                    drag={drag}
                   />
                 );
               }

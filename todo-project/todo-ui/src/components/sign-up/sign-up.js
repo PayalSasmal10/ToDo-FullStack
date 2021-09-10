@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState } from 'react';
 
 const SignUp = ({ loginSwitch, setLoginSwitch }) => {
@@ -53,6 +54,14 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
   // Submission handler
   const signupHandler = (event) => {
     event.preventDefault();
+
+    axios
+      .post('/signup', {
+        username: name,
+        email: email,
+        password: password,
+      })
+      .then((response) => console.log(response));
   };
 
   // Conditionally setting classname for making the form interactive via styling
