@@ -1,9 +1,13 @@
+from django.contrib.auth import login
 from .models import Task
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .serializers import TaskSerializer, UserSerializer, RegisterSerializer
 from rest_framework import generics, permissions
+from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.models import AuthToken
+from knox.views import LoginView
+
 
 # Create your views here.
 
@@ -55,7 +59,8 @@ def taskDelete(request, pk):
 
     return Response('Successfully deleted')
 
-class RegisterApiView(generics.GenericAPIView):
+#Sign up API
+class SignUpView(generics.GenericAPIView):
     serializer_class = RegisterSerializer
 
     def post(self, request, *args, **kwargs):
@@ -66,3 +71,15 @@ class RegisterApiView(generics.GenericAPIView):
             "user": UserSerializer(user, context=self.get_serializer_context()).data,
             "token": AuthToken.objects.create(user)[1]
         })
+
+
+# Login APi
+class SignInView(LoginView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, format=None):
+        serializer = AuthTokenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        login(request, user)
+        return super(SignInView, self).post(request, format=None)
