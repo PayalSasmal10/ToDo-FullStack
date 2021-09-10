@@ -57,7 +57,7 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
 
     axios
       .post('/signup', {
-        name: name,
+        username: name,
         email: email,
         password: password,
       })

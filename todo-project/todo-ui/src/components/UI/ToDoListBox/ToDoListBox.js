@@ -36,7 +36,7 @@ const ToDoListBox = ({
       draggable="true"
       onClick={idCheck}
       onDragStart={drag}
-      id={`drag${id}`}
+      id={id}
     >
       <main className="task-title">
         <span className="dot"></span>
