@@ -1,5 +1,7 @@
 from rest_framework import serializers
+from rest_framework.exceptions import AuthenticationFailed
 from .models import Task, User
+from django.contrib import auth
 
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,15 +21,46 @@ class RegisterSerializer(serializers.ModelSerializer):
         model = User
         fields = ['first_name', 'last_name', 'email', 'password']
 
+    def validate(self, attrs):
+        email = attrs.get('email', '')
+        first_name = attrs.get('first_name', '')
+        last_name = attrs.get('last_name', '')
+        
+        if not first_name.isalnum():
+            raise serializers.ValidationError('The first name shout be alphanumeric')
+        if not last_name.isalnum():
+            raise serializers.ValidationError('The last name shout be alphanumeric')
+        
+        return attrs
+
     def create(self, validated_data):
-        print("calling create user")
+        
         user = User.objects.create_user(**validated_data)
+
         return user
 
-# class LoginSeralizer(serializers.ModelSerializer):
-#     password = serializers.CharField(write_only=True)
-#     email = serializers.CharField(max_length=255)
 
-#     class Meta:
-#         model = User
-#         fields = ['email', 'username', 'password']
+class LoginSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(max_length=255, min_length=2)
+    password = serializers.CharField(max_length=255, write_only=True)
+    tokens = serializers.CharField(max_length=255, read_only=True)
+
+    class Meta:
+        model = User
+        fields = ['email','password','tokens']
+
+    def validate(self, attrs):
+        email = attrs.get('email', '')
+        password = attrs.get('password', '')
+        user = auth.authenticate(email=email,password=password)
+
+        if not user:
+            raise AuthenticationFailed('Invalid credentials, try again')
+       
+        
+        return {
+            'email': user.email,
+            'tokens': user.tokens
+        }
+
+        return super().validate(attrs)

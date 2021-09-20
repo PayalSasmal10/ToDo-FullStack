@@ -2,9 +2,9 @@ from django.http import response
 from .models import Task
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from todoapp.serializers import TaskSerializer, RegisterSerializer
+from todoapp.serializers import LoginSerializer, TaskSerializer, RegisterSerializer
 from rest_framework.generics import GenericAPIView
-from rest_framework import status
+from rest_framework import serializers, status
 # from knox.models import AuthToken
 # from knox.views import LoginView
 
@@ -68,9 +68,7 @@ class SignUpView(GenericAPIView):
 
         serializer = self.serializer_class(data=request.data)
 
-        print("I am in before serializer saved")
         if serializer.is_valid():
-            print("I am after is valid")
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
@@ -78,12 +76,11 @@ class SignUpView(GenericAPIView):
 
 
 # # Login APi
-# class SignInView(LoginView):
-#     permission_classes = (permissions.AllowAny,)
+class SignInView(GenericAPIView):
 
-#     def post(self, request, format=None):
-#         serializer = AuthTokenSerializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         user = serializer.validated_data['user']
-#         login(request, user)
-#         return super(SignInView, self).post(request, format=None)
+    serializer_class = LoginSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
