@@ -4,12 +4,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from todoapp.serializers import LoginSerializer, TaskSerializer, RegisterSerializer
 from rest_framework.generics import GenericAPIView
-from rest_framework import serializers, status
-# from knox.models import AuthToken
-# from knox.views import LoginView
-
-
-# Create your views here.
+from rest_framework import status
 
 
 @api_view(['GET'])
