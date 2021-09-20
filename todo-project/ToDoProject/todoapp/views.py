@@ -1,15 +1,10 @@
-from django.contrib.auth import login
+from django.http import response
 from .models import Task
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .serializers import TaskSerializer, UserSerializer, RegisterSerializer
-from rest_framework import generics, permissions
-from rest_framework.authtoken.serializers import AuthTokenSerializer
-from knox.models import AuthToken
-from knox.views import LoginView
-
-
-# Create your views here.
+from todoapp.serializers import LoginSerializer, TaskSerializer, RegisterSerializer
+from rest_framework.generics import GenericAPIView
+from rest_framework import status
 
 
 @api_view(['GET'])
@@ -60,26 +55,27 @@ def taskDelete(request, pk):
     return Response('Successfully deleted')
 
 #Sign up API
-class SignUpView(generics.GenericAPIView):
+class SignUpView(GenericAPIView):
+
     serializer_class = RegisterSerializer
 
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
+    def post(self,request):
+
+        serializer = self.serializer_class(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+
+# # Login APi
+class SignInView(GenericAPIView):
+
+    serializer_class = LoginSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        return Response({
-            "user": UserSerializer(user, context=self.get_serializer_context()).data,
-            "token": AuthToken.objects.create(user)[1]
-        })
-
-
-# Login APi
-class SignInView(LoginView):
-    permission_classes = (permissions.AllowAny,)
-
-    def post(self, request, format=None):
-        serializer = AuthTokenSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
-        login(request, user)
-        return super(SignInView, self).post(request, format=None)
+        return Response(serializer.data, status=status.HTTP_200_OK)
