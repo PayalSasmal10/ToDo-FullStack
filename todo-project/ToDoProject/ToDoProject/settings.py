@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'rest_framework',
     'todoapp',
+    'corsheaders',
 ]
 
 SITE_ID = 1
@@ -53,12 +54,13 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         # 'rest_framework.authentication.BasicAuthentication',
         # 'rest_framework.authentication.SessionAuthentication',
-        #'knox.auth.TokenAuthentication',
+        # 'knox.auth.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ]
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

@@ -80,7 +80,11 @@
   @include formInput();
 }
 
-.form-name {
+.form-first-name {
+  @include formInput();
+}
+
+.form-last-name {
   @include formInput();
 }
 
@@ -91,7 +95,8 @@
 
 .form-email.invalid,
 .form-pwd.invalid,
-.form-name.invalid {
+.form-first-name.invalid,
+.form-last-name.invalid {
   border: 2px solid rgb(207, 2, 2);
 }
 
