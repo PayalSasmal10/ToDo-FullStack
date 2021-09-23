@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import AuthContext from '../../store/auth-context';
+import { useHistory } from 'react-router-dom';
 import './side-nav.scss';
 
 const SideNav = () => {
   const sideNavHandler = () => {
     alert('SideNav clicked');
+  };
+
+  const authCtx = useContext(AuthContext);
+
+  const history = useHistory();
+
+  const logoutHandler = () => {
+    authCtx.logout();
+    history.replace('/');
   };
 
   return (
@@ -29,9 +40,9 @@ const SideNav = () => {
           <FontAwesomeIcon icon="cog" />
           <span>Settings</span>
         </div>
-        <div className="s2-1" onClick={sideNavHandler}>
+        <div className="s2-1">
           <FontAwesomeIcon icon="sign-out-alt" />
-          <span>Logout</span>
+          <span onClick={logoutHandler}>Logout</span>
         </div>
       </div>
     </div>

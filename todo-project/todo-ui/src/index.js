@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import axios from 'axios';
+import { AuthContextProvider } from './store/auth-context';
 import './index.css';
 
 axios.defaults.baseURL = 'http://127.0.0.1:8000/app/';
@@ -33,9 +34,11 @@ axios.interceptors.response.use(
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <AuthContextProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </AuthContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

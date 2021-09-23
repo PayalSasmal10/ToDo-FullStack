@@ -1,10 +1,22 @@
-import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useState, useContext } from 'react';
+import AuthContext from '../../store/auth-context';
+import { useHistory } from 'react-router-dom';
 
 const Login = ({ loginSwitch, setLoginSwitch }) => {
   const [email, setEmail] = useState('');
   const [emailTouched, setEmailTouched] = useState(false);
   const [password, setPassword] = useState('');
   const [passwordTouched, setPasswordTouched] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const authCtx = useContext(AuthContext);
+
+  const isLoggedIn = authCtx.isLoggedIn;
+
+  console.log(isLoggedIn);
+
+  const history = useHistory();
 
   // Email validation
   const emailValid = email.trim() !== '' && email.includes('@');
@@ -40,15 +52,27 @@ const Login = ({ loginSwitch, setLoginSwitch }) => {
   // Submission Handler
   const loginHandler = (event) => {
     event.preventDefault();
+    setLoading(true);
 
-    setEmailTouched(true);
+    axios
+      .post('/signin', {
+        email: email,
+        password: password,
+      })
+      .then((res) => {
+        setLoading(false);
+        authCtx.login(res.data.tokens);
+        history.replace('/task');
+      })
+      .catch((err) => console.log(err));
+    // setEmailTouched(true);
 
-    if (!emailValid) {
-      return;
-    }
-    console.log(email);
-    setEmail('');
-    setEmailTouched(false);
+    // if (!emailValid) {
+    //   return;
+    // }
+    // console.log(email);
+    // setEmail('');
+    // setEmailTouched(false);
   };
 
   // Conditionally setting classname for making the form interactive via styling
@@ -93,7 +117,7 @@ const Login = ({ loginSwitch, setLoginSwitch }) => {
         <label htmlFor="remember">Remember me</label>
         <br />
         <button type="submit" className="submitBtn" disabled={!formIsValid}>
-          Login
+          {!loading ? 'Login' : 'Loading...'}
         </button>
       </form>
       <p>

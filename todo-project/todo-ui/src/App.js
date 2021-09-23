@@ -9,7 +9,7 @@ function App() {
       <Route path="/" exact>
         <LoginPage />
       </Route>
-      <Route path="/task">
+      <Route path="/task" exact>
         <ProjectSection />
       </Route>
     </div>

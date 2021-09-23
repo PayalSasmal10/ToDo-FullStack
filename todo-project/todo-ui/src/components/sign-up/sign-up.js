@@ -10,6 +10,7 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
   const [lastName, setLastName] = useState('');
   const [firstNameTouched, setFirstNameTouched] = useState(false);
   const [lastNameTouched, setLastNameTouched] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Email validation
   const emailValid = email.trim() !== '' && email.includes('@');
@@ -66,6 +67,7 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
   // Submission handler
   const signupHandler = (event) => {
     event.preventDefault();
+    setIsLoading(true);
 
     axios
       .post('/signup', {
@@ -74,7 +76,10 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
         last_name: lastName,
         password: password,
       })
-      .then((response) => console.log(response))
+      .then((response) => {
+        console.log(response);
+        setIsLoading(false);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -148,7 +153,7 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
         />
         <br />
         <button type="submit" className="submitBtn" disabled={!formIsValid}>
-          Sign Up
+          {!isLoading ? 'Sign Up' : 'Loading...'}
         </button>
       </form>
       <p>
