@@ -11,6 +11,7 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
   const [firstNameTouched, setFirstNameTouched] = useState(false);
   const [lastNameTouched, setLastNameTouched] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  // const []
 
   // Email validation
   const emailValid = email.trim() !== '' && email.includes('@');
@@ -77,10 +78,14 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
         password: password,
       })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
+        console.log(response.statusText);
         setIsLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+      });
   };
 
   // Conditionally setting classname for making the form interactive via styling
