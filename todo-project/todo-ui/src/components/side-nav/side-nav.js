@@ -26,14 +26,14 @@ const SideNav = () => {
           <FontAwesomeIcon icon="home" />
           <span>Home</span>
         </div>
-        <div className="sidenav-section" onClick={sideNavHandler}>
+        {/* <div className="sidenav-section" onClick={sideNavHandler}>
           <FontAwesomeIcon icon="tasks" />
           <span>Project</span>
         </div>
         <div className="sidenav-section" onClick={sideNavHandler}>
           <FontAwesomeIcon icon="calendar" />
           <span>Calendar</span>
-        </div>
+        </div> */}
       </div>
       <div className="section2">
         <div className="s2-1" onClick={sideNavHandler}>

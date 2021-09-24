@@ -4,24 +4,26 @@ import './header.scss';
 
 const Header = (props) => {
   const [user, setUser] = useState('Prince');
+  const [drpDown, setDropDown] = useState(false);
 
+  const dropDown = (
+    <div className="dropdown-class">
+      <span>LogOut</span>
+    </div>
+  );
+
+  console.log(drpDown);
   return (
     <div className="header">
-      <div className="search">
-        <FontAwesomeIcon icon="search" className="i-search" />
-        <input placeholder="Search" className="search-input"></input>
-      </div>
       <div className="nav-section">
         <nav className="nav">
           <ul>
             <li>
               <FontAwesomeIcon icon="question-circle" />
             </li>
-            <li>
-              <FontAwesomeIcon icon="bell" />
-            </li>
-            <li>
+            <li onClick={() => setDropDown(!drpDown)}>
               <FontAwesomeIcon icon="chevron-down" />
+              {drpDown && dropDown}
             </li>
             <li>Hi, {user}</li>
           </ul>

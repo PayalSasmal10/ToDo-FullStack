@@ -117,7 +117,7 @@ const ProjectToDo = (props) => {
       <div className="cards">
         <div className="card" id="card1" onDrop={drop} onDragOver={dragOver}>
           <p className="cards-head">TO DO</p>
-          {todoValues ? (
+          {todoValues && todoValues.length > 0 ? (
             todoValues.map((todo) => {
               if (todo.status === 'todo') {
                 return (
@@ -143,7 +143,7 @@ const ProjectToDo = (props) => {
         </div>
         <div className="card" id="card2" onDrop={drop} onDragOver={dragOver}>
           <p className="cards-head">IN PROGRESS</p>
-          {todoValues ? (
+          {todoValues && todoValues.length > 0 ? (
             todoValues?.map((todo) => {
               if (todo.status === 'inprogress') {
                 return (
@@ -167,7 +167,7 @@ const ProjectToDo = (props) => {
         </div>
         <div className="card" id="card3" onDrop={drop} onDragOver={dragOver}>
           <p className="cards-head">COMPLETED</p>
-          {todoValues ? (
+          {todoValues && todoValues.length > 0 ? (
             todoValues.map((todo) => {
               if (todo.status === 'completed') {
                 return (
@@ -186,7 +186,7 @@ const ProjectToDo = (props) => {
               }
             })
           ) : (
-            <p>No completed tasks</p>
+            <p className="guide-label">No completed tasks</p>
           )}
         </div>
       </div>
