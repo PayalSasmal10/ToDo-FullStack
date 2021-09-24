@@ -6,8 +6,11 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
   const [emailTouched, setEmailTouched] = useState(false);
   const [password, setPassword] = useState('');
   const [passwordTouched, setPasswordTouched] = useState(false);
-  const [name, setName] = useState('');
-  const [nameTouched, setNameTouched] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [firstNameTouched, setFirstNameTouched] = useState(false);
+  const [lastNameTouched, setLastNameTouched] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Email validation
   const emailValid = email.trim() !== '' && email.includes('@');
@@ -16,12 +19,14 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
   const passwordValid = password.trim() !== '' && password.length >= 8;
   const passwordIsInvalid = !passwordValid && passwordTouched;
   // Name validation
-  const nameValid = name.trim() !== '';
-  const nameIsInvalid = !nameValid && nameTouched;
+  const firstNameValid = firstName.trim() !== '';
+  const firstNameIsInvalid = !firstNameValid && firstNameTouched;
+  const lastNameValid = lastName.trim() !== '';
+  const lastNameIsInvalid = !lastNameValid && lastNameTouched;
 
   // Complete form validation
   let formIsValid = false;
-  if (nameValid && emailValid && passwordValid) {
+  if (firstNameValid && lastNameValid && emailValid && passwordValid) {
     formIsValid = true;
   }
 
@@ -34,8 +39,12 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
     setPassword(e.target.value);
   };
 
-  const nameHandler = (e) => {
-    setName(e.target.value);
+  const firstNameHandler = (e) => {
+    setFirstName(e.target.value);
+  };
+
+  const lastNameHandler = (e) => {
+    setLastName(e.target.value);
   };
 
   // Blur handler
@@ -47,21 +56,31 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
     setPasswordTouched(true);
   };
 
-  const nameBlurHandler = () => {
-    setNameTouched(true);
+  const firstNameBlurHandler = () => {
+    setFirstNameTouched(true);
+  };
+
+  const lastNameBlurHandler = () => {
+    setLastNameTouched(true);
   };
 
   // Submission handler
   const signupHandler = (event) => {
     event.preventDefault();
+    setIsLoading(true);
 
     axios
       .post('/signup', {
-        username: name,
         email: email,
+        first_name: firstName,
+        last_name: lastName,
         password: password,
       })
-      .then((response) => console.log(response));
+      .then((response) => {
+        console.log(response);
+        setIsLoading(false);
+      })
+      .catch((err) => console.log(err));
   };
 
   // Conditionally setting classname for making the form interactive via styling
@@ -73,23 +92,40 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
     ? 'form-pwd invalid'
     : 'form-pwd';
 
-  const nameInputClass = nameIsInvalid ? 'form-name invalid' : 'form-name';
+  const firstNameInputClass = firstNameIsInvalid
+    ? 'form-first-name invalid'
+    : 'form-first-name';
+  const lastNameInputClass = lastNameIsInvalid
+    ? 'form-last-name invalid'
+    : 'form-last-name';
 
   return (
     <>
       <h2>Sign Up</h2>
 
       <form onSubmit={signupHandler}>
-        <label htmlFor="name">Name*</label>
+        <label htmlFor="firstName">First Name*</label>
         <br />
         <input
           type="text"
-          name="name"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => nameHandler(e)}
-          onBlur={nameBlurHandler}
-          className={nameInputClass}
+          name="firstname"
+          placeholder="First Name"
+          value={firstName}
+          onChange={(e) => firstNameHandler(e)}
+          onBlur={firstNameBlurHandler}
+          className={firstNameInputClass}
+        />
+        <br />
+        <label htmlFor="name">Last Name*</label>
+        <br />
+        <input
+          type="text"
+          name="lastname"
+          placeholder="Last Name"
+          value={lastName}
+          onChange={(e) => lastNameHandler(e)}
+          onBlur={lastNameBlurHandler}
+          className={lastNameInputClass}
         />
         <br />
         <label htmlFor="email">Email*</label>
@@ -117,7 +153,7 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
         />
         <br />
         <button type="submit" className="submitBtn" disabled={!formIsValid}>
-          Sign Up
+          {!isLoading ? 'Sign Up' : 'Loading...'}
         </button>
       </form>
       <p>

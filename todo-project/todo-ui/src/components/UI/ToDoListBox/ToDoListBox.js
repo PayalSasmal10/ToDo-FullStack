@@ -10,7 +10,6 @@ const ToDoListBox = ({
   open,
   setOpen,
   getTodoLists,
-  status,
   drag,
 }) => {
   // Delete handler
@@ -25,16 +24,11 @@ const ToDoListBox = ({
     setOpen(!open);
   };
 
-  const idCheck = () => {
-    alert(`${status}`);
-  };
-
   return (
     <section
       className="todo-listbox"
       key={id}
       draggable="true"
-      onClick={idCheck}
       onDragStart={drag}
       id={id}
     >
