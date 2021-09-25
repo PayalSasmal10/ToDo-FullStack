@@ -27,10 +27,10 @@ class RegisterSerializer(serializers.ModelSerializer):
         last_name = attrs.get('last_name', '')
         
         if not first_name.isalnum():
-            raise serializers.ValidationError('The first name shout be alphanumeric')
+            raise serializers.ValidationError('The first name should be alphanumeric')
         if not last_name.isalnum():
-            raise serializers.ValidationError('The last name shout be alphanumeric')
-        
+            raise serializers.ValidationError('The last name should be alphanumeric')
+
         return attrs
 
     def create(self, validated_data):
