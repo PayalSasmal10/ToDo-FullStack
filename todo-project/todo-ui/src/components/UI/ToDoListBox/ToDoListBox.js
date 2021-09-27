@@ -14,7 +14,7 @@ const ToDoListBox = ({
 }) => {
   // Delete handler
   const todoDeleteHandler = () => {
-    axios.delete('/task-delete/' + id).then((response) => {
+    axios.delete('/task/' + id).then((response) => {
       getTodoLists();
     });
   };

@@ -62,6 +62,7 @@ const Login = ({ loginSwitch, setLoginSwitch }) => {
       .then((res) => {
         setLoading(false);
         authCtx.login(res.data.tokens);
+        authCtx.firstNameSetter(res.data.first_name);
         history.replace('/task');
       })
       .catch((err) => console.log(err));

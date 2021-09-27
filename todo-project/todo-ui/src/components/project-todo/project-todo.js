@@ -70,7 +70,7 @@ const ProjectToDo = (props) => {
   // Drag and Drop Handler
   const drag = (e) => {
     console.log(`targetID: ${e.target.id}`);
-    e.dataTransfer.setData('text', e.target.id);
+    e.dataTransfer.setData('text/plain', e.target.id);
     setDragCardId(e.target.id);
   };
 
