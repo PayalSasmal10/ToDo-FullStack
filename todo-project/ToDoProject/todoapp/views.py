@@ -30,7 +30,7 @@ def taskList(request):
             serializer.save()
         return Response(serializer.data)
 
-@api_view(['GET','PUT'])
+@api_view(['GET','PUT','DELETE'])
 def taskUpdate(request, pk):
     if request.method == 'GET':
         task = Task.objects.get(id=pk)
@@ -45,14 +45,13 @@ def taskUpdate(request, pk):
 
         return Response(serializer.data)
 
+    elif request.method == 'DELETE':
+        task = Task.objects.get(id=pk)
+        task.delete()
+
+        return Response("Successfully Deleted")
 
 
-@api_view(['DELETE'])
-def taskDelete(request, pk):
-    task = Task.objects.get(id=pk)
-    task.delete()
-
-    return Response('Successfully deleted')
 
 #Sign up API
 class SignUpView(GenericAPIView):
