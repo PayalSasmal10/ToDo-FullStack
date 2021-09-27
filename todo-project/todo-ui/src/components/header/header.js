@@ -1,10 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import AuthContext from '../../store/auth-context';
 import './header.scss';
 
 const Header = (props) => {
-  const [user, setUser] = useState('Prince');
   const [drpDown, setDropDown] = useState(false);
+  const authCtx = useContext(AuthContext);
+  const user = authCtx.firstName;
 
   const dropDown = (
     <div className="dropdown-class">
