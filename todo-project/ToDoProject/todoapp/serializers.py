@@ -1,7 +1,9 @@
 from rest_framework import serializers
 from rest_framework.exceptions import AuthenticationFailed
+from rest_framework_simplejwt.exceptions import TokenError
 from .models import Task, User
 from django.contrib import auth
+from rest_framework_simplejwt.tokens import RefreshToken
 
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
@@ -72,5 +74,17 @@ class LoginSerializer(serializers.ModelSerializer):
 
 class LogoutSerializer(serializers.ModelSerializer):
 
-    class Meta:
-        model = User
+    refresh = serializers.CharField()
+
+    def validate(self, attrs):
+
+        self.token = attrs['refresh']
+
+        return attrs
+
+    def save(self, **kwargs):
+        try:
+            RefreshToken (self.token).blacklist()
+
+        except TokenError:
+            self.fail("Bad Token")
