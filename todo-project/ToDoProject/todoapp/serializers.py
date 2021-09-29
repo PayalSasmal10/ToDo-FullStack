@@ -68,3 +68,9 @@ class LoginSerializer(serializers.ModelSerializer):
         }
 
         return super().validate(attrs)
+
+
+class LogoutSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User

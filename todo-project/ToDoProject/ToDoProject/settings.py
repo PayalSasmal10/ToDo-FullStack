@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'todoapp',
     'corsheaders',
+    'rest_framework_simplejwt.token_blacklist'
 ]
 
 SITE_ID = 1
