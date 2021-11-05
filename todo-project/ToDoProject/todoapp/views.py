@@ -2,9 +2,9 @@ from django.http import response
 from .models import Task
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from todoapp.serializers import LoginSerializer, TaskSerializer, RegisterSerializer
+from todoapp.serializers import LoginSerializer, TaskSerializer, RegisterSerializer, LogoutSerializer
 from rest_framework.generics import GenericAPIView
-from rest_framework import status
+from rest_framework import  status, permissions
 
 
 @api_view(['GET'])
@@ -78,3 +78,18 @@ class SignInView(GenericAPIView):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+#Logout API
+class LogOutView(GenericAPIView):
+    
+    serializer_class = LogoutSerializer
+
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self,request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response("Successfully Logout", status=status.HTTP_204_NO_CONTENT)
