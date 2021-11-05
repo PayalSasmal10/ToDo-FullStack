@@ -46,7 +46,6 @@ class LoginSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(max_length=255, min_length=2)
     password = serializers.CharField(max_length=255, write_only=True)
     tokens = serializers.SerializerMethodField()
-    #tokens = serializers.CharField(max_length=255, read_only=True)
     first_name = serializers.CharField(max_length=255, read_only=True)
     last_name = serializers.CharField(max_length=255, read_only=True)
 
