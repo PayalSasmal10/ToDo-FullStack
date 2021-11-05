@@ -43,10 +43,18 @@ class RegisterSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(max_length=255, min_length=2)
     password = serializers.CharField(max_length=255, write_only=True)
-    tokens = serializers.CharField(max_length=255, read_only=True)
+    tokens = serializers.SerializerMethodField()
+    #tokens = serializers.CharField(max_length=255, read_only=True)
     first_name = serializers.CharField(max_length=255, read_only=True)
     last_name = serializers.CharField(max_length=255, read_only=True)
 
+    def get_tokens(self, obj):
+        user = User.objects.get(email=obj['email'])
+
+        return {
+            'refresh': user.tokens()['refresh'],
+            'access': user.tokens()['access']
+        }
     class Meta:
         model = User
         fields = ['email','password','first_name','last_name','tokens']
