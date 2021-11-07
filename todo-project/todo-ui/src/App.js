@@ -16,11 +16,10 @@ function App() {
       <Route path="/" exact>
         <HomePage />
       </Route>
-      {!isLoggedIn && (
-        <Route path="/login">
-          <LoginPage />
-        </Route>
-      )}
+      <Route path="/login">
+        {!isLoggedIn && <LoginPage />}
+        {isLoggedIn && <Redirect to="/task" />}
+      </Route>
       <Route path="/task" exact>
         {isLoggedIn && <ProjectSection />}
         {!isLoggedIn && <Redirect to="/login" />}
