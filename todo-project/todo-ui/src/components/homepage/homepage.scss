@@ -1,0 +1,23 @@
+.homepage {
+  margin: 0rem 3rem;
+}
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h1 {
+    color: #1d1d1d;
+  }
+
+  button {
+    min-width: 4rem;
+    min-height: 2rem;
+    cursor: pointer;
+  }
+}
+
+.content h4 {
+  color: #919191;
+}
