@@ -15,11 +15,12 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 /** Login section **/
 .login-section {
-  width: 50vw;
+  // width: 50vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
