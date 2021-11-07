@@ -16,12 +16,11 @@ const LoginPage = () => {
           <SignUp loginSwitch={loginSwitch} setLoginSwitch={setLoginSwitch} />
         )}
       </div>
-      <div className="brand-section">
-        {/* <img src={task} alt="Task Tracker" /> */}
+      {/* <div className="brand-section">
         <h2 className="multicolortext">TASK</h2>
         <h2 className="multicolortext">TRACKER</h2>
         #stars #stars2 #stars3
-      </div>
+      </div> */}
     </div>
   );
 };
