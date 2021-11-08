@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AuthContext from '../../store/auth-context';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import './side-nav.scss';
 
 const SideNav = () => {
@@ -20,7 +20,10 @@ const SideNav = () => {
 
   return (
     <div className="sidenav">
-      <h2>Task Tracker</h2>
+      <h2>
+        <Link to="/">Task Tracker</Link>
+      </h2>
+
       <div className="section1">
         <div className="sidenav-section" onClick={sideNavHandler}>
           <FontAwesomeIcon icon="home" />
