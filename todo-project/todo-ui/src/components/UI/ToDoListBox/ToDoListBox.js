@@ -5,8 +5,13 @@ import './ToDoListBox.scss';
 
 const ToDoListBox = ({
   todoTitle,
+  setTodoTitle,
   todoNote,
+  setTodoNote,
+  status,
+  setStatus,
   id,
+  setTodoId,
   open,
   setOpen,
   getTodoLists,
@@ -20,8 +25,12 @@ const ToDoListBox = ({
   };
 
   // List update handler
-  const listUpdateHandler = (id) => {
+  const listUpdateHandler = () => {
     setOpen(!open);
+    setTodoTitle(todoTitle);
+    setTodoNote(todoNote);
+    setTodoId(id);
+    setStatus(status);
   };
 
   return (

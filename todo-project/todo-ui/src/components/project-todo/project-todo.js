@@ -13,6 +13,7 @@ const ProjectToDo = (props) => {
   const [todoValues, setTodoValues] = useState(null);
   const [loading, setLoading] = useState(false);
   const [dragCardId, setDragCardId] = useState();
+  const [todoId, setTodoId] = useState('');
 
   // Get request
   const getTodoLists = () => {
@@ -46,25 +47,43 @@ const ProjectToDo = (props) => {
   const todoSubmitHandler = (e) => {
     e.preventDefault();
 
-    axios
-      .post('/task', {
-        title: todoTitle,
-        description: todoNote,
-        status: status,
-      })
-      .then((response) => {
-        getTodoLists();
-      });
-    setLoading(true);
-    setTodoTitle('');
-    setTodoNote('');
-    setIsOpen(!isOpen);
-    setStatus('todo');
+    if (!todoId) {
+      axios
+        .post('/task', {
+          title: todoTitle,
+          description: todoNote,
+          status: status,
+        })
+        .then((response) => {
+          getTodoLists();
+        });
+      setLoading(true);
+      setTodoTitle('');
+      setTodoNote('');
+      setIsOpen(!isOpen);
+      setStatus('todo');
+    } else {
+      axios
+        .put(`/task/${todoId}`, {
+          id: todoId,
+          title: todoTitle,
+          description: todoNote,
+          status: status,
+        })
+        .then((response) => {
+          setIsOpen(!isOpen);
+          getTodoLists();
+        });
+    }
   };
 
   // Modal Handler
   const onClickHandler = () => {
     setIsOpen(!isOpen);
+    setTodoTitle('');
+    setTodoNote('');
+    setTodoId('');
+    setStatus('todo');
   };
 
   // Drag and Drop Handler
@@ -106,6 +125,8 @@ const ProjectToDo = (props) => {
     e.preventDefault();
   };
 
+  console.log('todoId', todoId);
+
   return (
     <div className="projects">
       <div className="add-task-div">
@@ -123,14 +144,16 @@ const ProjectToDo = (props) => {
                 return (
                   <ToDoListBox
                     todoTitle={todo.title}
+                    setTodoTitle={setTodoTitle}
                     todoNote={todo.description}
+                    setTodoNote={setTodoNote}
                     status={todo.status}
+                    setStatus={setStatus}
                     id={todo.id}
                     key={todo.id}
+                    setTodoId={setTodoId}
                     open={isOpen}
                     setOpen={setIsOpen}
-                    todoValues={todoValues}
-                    setTodoValues={setTodoValues}
                     getTodoLists={getTodoLists}
                     drag={drag}
                   />
@@ -149,10 +172,14 @@ const ProjectToDo = (props) => {
                 return (
                   <ToDoListBox
                     todoTitle={todo.title}
+                    setTodoTitle={setTodoTitle}
                     todoNote={todo.description}
+                    setTodoNote={setTodoNote}
                     status={todo.status}
+                    setStatus={setStatus}
                     key={todo.id}
                     id={todo.id}
+                    setTodoId={setTodoId}
                     open={isOpen}
                     setOpen={setIsOpen}
                     getTodoLists={getTodoLists}
@@ -173,10 +200,14 @@ const ProjectToDo = (props) => {
                 return (
                   <ToDoListBox
                     todoTitle={todo.title}
+                    setTodoTitle={setTodoTitle}
                     todoNote={todo.description}
+                    setTodoNote={setTodoNote}
                     status={todo.status}
+                    setStatus={setStatus}
                     key={todo.id}
                     id={todo.id}
+                    setTodoId={setTodoId}
                     open={isOpen}
                     setOpen={setIsOpen}
                     getTodoLists={getTodoLists}
