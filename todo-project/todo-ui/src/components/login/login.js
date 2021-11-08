@@ -2,6 +2,8 @@ import axios from 'axios';
 import { useState, useContext } from 'react';
 import AuthContext from '../../store/auth-context';
 import { useHistory } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = ({ loginSwitch, setLoginSwitch }) => {
   const [email, setEmail] = useState('');
@@ -66,7 +68,14 @@ const Login = ({ loginSwitch, setLoginSwitch }) => {
         authCtx.firstNameSetter(res.data.first_name);
         history.replace('/task');
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setLoading(false);
+        // alert('Invalid Credentials. Try Again!');
+        toast.error('Invalid Credentials. Try Again!', {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        console.log(err);
+      });
     // setEmailTouched(true);
 
     // if (!emailValid) {
@@ -131,6 +140,7 @@ const Login = ({ loginSwitch, setLoginSwitch }) => {
           Create an account
         </span>
       </p>
+      <ToastContainer autoClose={2000} />
     </>
   );
 };

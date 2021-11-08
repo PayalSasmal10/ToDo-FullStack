@@ -15,7 +15,7 @@ const HomePage = () => {
       <div className="content">
         <img src={svg} alt="task logo" />
         <h2>
-          Now managing tasks is so easy using the <strong>Task Tracker</strong>{' '}
+          Now managing tasks are so easy using the <strong>Task Tracker</strong>{' '}
           App.
         </h2>
       </div>
