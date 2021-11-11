@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp = ({ loginSwitch, setLoginSwitch }) => {
   const [email, setEmail] = useState('');
@@ -78,13 +80,19 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
         password: password,
       })
       .then((response) => {
-        // console.log(response);
+        console.log(response);
         console.log(response.statusText);
         setIsLoading(false);
+        toast.success('You have successfully Signed Up!', {
+          position: toast.POSITION.TOP_CENTER,
+        });
       })
       .catch((err) => {
         console.log(err);
         setIsLoading(false);
+        toast.error('Please try with different Email', {
+          position: toast.POSITION.TOP_CENTER,
+        });
       });
   };
 
@@ -170,6 +178,7 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
           Sign In
         </span>
       </p>
+      <ToastContainer autoClose={2000} />
     </>
   );
 };
