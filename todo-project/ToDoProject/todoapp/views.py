@@ -49,7 +49,7 @@ class LogOutView(GenericAPIView):
 
         return Response("Successfully Logout", status=status.HTTP_204_NO_CONTENT)
 
-
+# CRUD operation without Primary key
 class taskList(GenericAPIView):
 
     authentication_classes = [JWTAuthentication]
@@ -68,6 +68,7 @@ class taskList(GenericAPIView):
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+#CRUD operation based on the primary key
 class taskPrimarykeybased(GenericAPIView):
     
     def get(self, request, pk):

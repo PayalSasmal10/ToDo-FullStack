@@ -5,17 +5,13 @@ from .models import Task, User
 from django.contrib import auth
 from rest_framework_simplejwt.tokens import RefreshToken
 
+#Task Serializer
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = '__all__'
 
-
-# class UserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ('id', 'first_name', 'last_name', 'email')
-
+# Registration Serializer
 class RegisterSerializer(serializers.ModelSerializer):
 
     password = serializers.CharField(max_length=255, write_only=True)
@@ -41,7 +37,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         return user
 
-
+# Login Serializer
 class LoginSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(max_length=255, min_length=2)
     password = serializers.CharField(max_length=255, write_only=True)
@@ -78,7 +74,7 @@ class LoginSerializer(serializers.ModelSerializer):
 
         return super().validate(attrs)
 
-
+# Logout Serializer
 class LogoutSerializer(serializers.ModelSerializer):
 
     refresh = serializers.CharField()
