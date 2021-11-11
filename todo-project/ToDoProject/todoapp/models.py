@@ -5,15 +5,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 # Create your models here.
 
-
-class Task(models.Model):
-    title = models.CharField(max_length=100)
-    description = models.TextField(blank=True)
-    status = models.CharField(max_length=20, default='todo')
-
-    def __str__(self):
-        return self.title
-
 class UserManager(BaseUserManager):
 
     def create_user(self, first_name, last_name, email, password=None):
@@ -65,3 +56,13 @@ class User(AbstractBaseUser,PermissionsMixin):
             'refresh': str(refresh),
             'access': str(refresh.access_token)
         }
+
+
+class Task(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    status = models.CharField(max_length=20, default='todo')
+    email = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+
+    def __str__(self):
+        return self.title

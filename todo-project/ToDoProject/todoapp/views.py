@@ -1,56 +1,10 @@
 from django.http import response
 from .models import Task
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
 from todoapp.serializers import LoginSerializer, TaskSerializer, RegisterSerializer, LogoutSerializer
 from rest_framework.generics import GenericAPIView
-from rest_framework import  status, permissions
-
-
-@api_view(['GET'])
-def apiOverviews(request):
-    api_urls = {
-        'List': '/task',
-        'Update': '/task/<str:pk>',
-        'Delete': '/task-delete/<str:pk>',
-    }
-    return Response(api_urls)
-
-
-@api_view(['GET', 'POST'])
-def taskList(request):
-    if request.method == 'GET':
-        tasks = Task.objects.all().order_by('-id')
-        serializer = TaskSerializer(tasks, many=True)
-        return Response(serializer.data)
-    
-    elif request.method == 'POST':
-        serializer = TaskSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-        return Response(serializer.data)
-
-@api_view(['GET','PUT','DELETE'])
-def taskUpdate(request, pk):
-    if request.method == 'GET':
-        task = Task.objects.get(id=pk)
-        serializer = TaskSerializer(instance=task, many=False)
-        return Response(serializer.data)
-    
-    elif request.method == 'PUT':
-        task = Task.objects.get(id=pk)
-        serializer = TaskSerializer(instance=task, data=request.data)
-        if serializer.is_valid():
-           serializer.save()
-
-        return Response(serializer.data)
-
-    elif request.method == 'DELETE':
-        task = Task.objects.get(id=pk)
-        task.delete()
-
-        return Response("Successfully Deleted")
-
+from rest_framework import  serializers, status, permissions
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 #Sign up API
@@ -71,6 +25,7 @@ class SignUpView(GenericAPIView):
 
 # # Login APi
 class SignInView(GenericAPIView):
+
 
     serializer_class = LoginSerializer
 
@@ -93,3 +48,43 @@ class LogOutView(GenericAPIView):
         serializer.save()
 
         return Response("Successfully Logout", status=status.HTTP_204_NO_CONTENT)
+
+
+class taskList(GenericAPIView):
+
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+   
+        tasks = Task.objects.all()
+        serializer = TaskSerializer(tasks, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        serializer = TaskSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+class taskPrimarykeybased(GenericAPIView):
+    
+    def get(self, request, pk):
+
+        tasks = Task.objects.get(id=pk)
+        serializer = TaskSerializer(instance=tasks, data=request.data)
+        
+        return Response(serializer.data, status=status.HTTP_200_OK)
+        
+    def put(self, request, pk):
+        tasks = Task.objects.get(id=pk)
+        serializer = TaskSerializer(instance=tasks, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def delete(self, request, pk):
+        tasks = Task.objects.get(id=pk)
+        tasks.delete()
+        return Response("Deleted data successfully", status=status.HTTP_200_OK)
