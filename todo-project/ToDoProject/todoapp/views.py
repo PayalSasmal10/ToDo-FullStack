@@ -73,6 +73,8 @@ class taskList(GenericAPIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_406_NOT_ACCEPTABLE)
 
     # def get_queryset(self):
     #     return self.queryset.filter(userId=self.request.user)
@@ -94,20 +96,15 @@ class taskPrimarykeybased(GenericAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
         
     def put(self, request, pk):
-        print("I am inside put")
         tasks = Task.objects.get(user=pk)
-        print(tasks)
         user = request.user
-        print(tasks.user)
 
         if tasks.user != user:
             return Response({'response': "You don't have permission to edit that."})
 
 
         serializer = TaskUpdateSerializer(tasks, data=request.data)
-        print(serializer)
         if serializer.is_valid():
-            print("i am inside serializer")
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
 
