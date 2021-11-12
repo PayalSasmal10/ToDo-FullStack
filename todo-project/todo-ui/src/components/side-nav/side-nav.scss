@@ -1,7 +1,9 @@
 .sidenav {
+  box-sizing: border-box;
   width: 20vw;
   min-height: 100vh;
   box-shadow: 0 0 5px #d9d9d9, -20px -20px 60px #ffffff;
+  position: fixed;
   font-size: large;
   h2 {
     text-align: center;
@@ -38,9 +40,9 @@
 }
 
 @media screen and (min-width: 768px) and (max-width: 1400px) {
-  .sidenav {
-    width: 25vw;
-  }
+  // .sidenav {
+  //   width: 20vw;
+  // }
   .sidenav-section,
   .s2-1 {
     margin: 2rem 4rem;
