@@ -3,7 +3,7 @@ from .models import Task
 from rest_framework.response import Response
 from todoapp.serializers import LoginSerializer, TaskSerializer, RegisterSerializer, LogoutSerializer
 from rest_framework.generics import GenericAPIView
-from rest_framework import  serializers, status, permissions
+from rest_framework import status, permissions
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
@@ -58,15 +58,28 @@ class taskList(GenericAPIView):
     def get(self, request):
    
         tasks = Task.objects.all()
+        user = request.user
+
+        if tasks.user != user:
+            return Response({'response':"You don't have permission to fetch the data"})
         serializer = TaskSerializer(tasks, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
-        serializer = TaskSerializer(data=request.data)
+        data = request.data
+        data['user'] = request.user.pk
+        print("data:", data)
+        serializer = TaskSerializer(data=data)
+        print(serializer)
         if serializer.is_valid():
+            print("I am under validation")
             serializer.save()
+            print("I am after save")
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    # def get_queryset(self):
+    #     return self.queryset.filter(userId=self.request.user)
 
 #CRUD operation based on the primary key
 class taskPrimarykeybased(GenericAPIView):
@@ -74,7 +87,13 @@ class taskPrimarykeybased(GenericAPIView):
     def get(self, request, pk):
 
         tasks = Task.objects.get(id=pk)
-        serializer = TaskSerializer(instance=tasks, data=request.data)
+        data = {}
+        user = request.user
+        if tasks.user != user:
+            data['response'] = "You don't have permission to edit this"
+            return Response(data=data)
+        
+        serializer = TaskSerializer(tasks)
         
         return Response(serializer.data, status=status.HTTP_200_OK)
         
