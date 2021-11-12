@@ -13,6 +13,11 @@ class TaskSerializer(serializers.ModelSerializer):
         fields = ['title', 'description', 'status', 'user']
         
 
+class TaskUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = ['title', 'description', 'status']
+
 # Registration Serializer
 class RegisterSerializer(serializers.ModelSerializer):
 

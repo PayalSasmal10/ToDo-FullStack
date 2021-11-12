@@ -1,7 +1,7 @@
 from django.http import response
 from .models import Task
 from rest_framework.response import Response
-from todoapp.serializers import LoginSerializer, TaskSerializer, RegisterSerializer, LogoutSerializer
+from todoapp.serializers import LoginSerializer, TaskSerializer, TaskUpdateSerializer, RegisterSerializer, LogoutSerializer
 from rest_framework.generics import GenericAPIView
 from rest_framework import status, permissions
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -58,25 +58,21 @@ class taskList(GenericAPIView):
     def get(self, request):
    
         tasks = Task.objects.all()
-        user = request.user
-
-        if tasks.user != user:
+        user = request.user.pk
+        print(user)
+        serializer = TaskSerializer(tasks)
+        print(serializer)
+        if serializer['user'] != user:
             return Response({'response':"You don't have permission to fetch the data"})
-        serializer = TaskSerializer(tasks, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
         data = request.data
         data['user'] = request.user.pk
-        print("data:", data)
         serializer = TaskSerializer(data=data)
-        print(serializer)
         if serializer.is_valid():
-            print("I am under validation")
             serializer.save()
-            print("I am after save")
-
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     # def get_queryset(self):
     #     return self.queryset.filter(userId=self.request.user)
@@ -98,11 +94,25 @@ class taskPrimarykeybased(GenericAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
         
     def put(self, request, pk):
-        tasks = Task.objects.get(id=pk)
-        serializer = TaskSerializer(instance=tasks, data=request.data)
+        print("I am inside put")
+        tasks = Task.objects.get(user=pk)
+        print(tasks)
+        user = request.user
+        print(tasks.user)
+
+        if tasks.user != user:
+            return Response({'response': "You don't have permission to edit that."})
+
+
+        serializer = TaskUpdateSerializer(tasks, data=request.data)
+        print(serializer)
         if serializer.is_valid():
+            print("i am inside serializer")
             serializer.save()
-        return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
     def delete(self, request, pk):
         tasks = Task.objects.get(id=pk)
