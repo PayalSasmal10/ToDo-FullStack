@@ -24,9 +24,9 @@
 }
 
 .close-save {
-  position: absolute;
-  right: 5px;
-  bottom: 5px;
+  padding-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .cancel {
@@ -58,42 +58,12 @@
 .textAreaElement {
   border: none;
   resize: none;
-  min-height: 18vh;
-  min-width: 30vw;
+  height: 18vh;
+  width: 30vw;
 }
 
 .inputElement:focus,
 .textAreaElement:focus {
   outline: none;
   resize: none;
-}
-
-@media screen and (min-height: 400px) and (max-height: 560px) {
-  .textAreaElement {
-    min-height: 8vh;
-  }
-}
-
-@media screen and (min-height: 560px) and (max-height: 640px) {
-  .textAreaElement {
-    min-height: 10vh;
-  }
-}
-
-@media screen and (min-height: 640px) and (max-height: 730px) {
-  .textAreaElement {
-    min-height: 13vh;
-  }
-}
-
-@media screen and (min-height: 730px) and (max-height: 840px) {
-  .textAreaElement {
-    min-height: 15vh;
-  }
-}
-
-@media screen and (min-height: 840px) and (max-height: 900px) {
-  .textAreaElement {
-    min-height: 17vh;
-  }
 }
