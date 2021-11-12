@@ -76,23 +76,18 @@ class taskList(GenericAPIView):
         
         return Response(serializer.errors, status=status.HTTP_406_NOT_ACCEPTABLE)
 
-    # def get_queryset(self):
-    #     return self.queryset.filter(userId=self.request.user)
 
 #CRUD operation based on the primary key
 class taskPrimarykeybased(GenericAPIView):
     
     def get(self, request, pk):
 
-        tasks = Task.objects.get(id=pk)
-        data = {}
+        tasks = Task.objects.get(user=pk)
         user = request.user
         if tasks.user != user:
-            data['response'] = "You don't have permission to edit this"
-            return Response(data=data)
-        
+            return Response("You don't have permission to fetch that")
+
         serializer = TaskSerializer(tasks)
-        
         return Response(serializer.data, status=status.HTTP_200_OK)
         
     def put(self, request, pk):
@@ -112,6 +107,11 @@ class taskPrimarykeybased(GenericAPIView):
 
 
     def delete(self, request, pk):
-        tasks = Task.objects.get(id=pk)
+        tasks = Task.objects.get(user=pk)
+        user = request.user
+
+        if tasks.user != user:
+            return Response({'response': "You don't have permission to edit that."})
+
         tasks.delete()
-        return Response("Deleted data successfully", status=status.HTTP_200_OK)
+        return Response("Task deleted successfully", status=status.HTTP_200_OK)
