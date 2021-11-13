@@ -5,28 +5,22 @@ from .models import Task, User
 from django.contrib import auth
 from rest_framework_simplejwt.tokens import RefreshToken
 
-
+# Task fetching serializer
 class TaskGetSerializer(serializers.ModelSerializer):
-
-    #email = serializers.SerializerMethodField('get_userid_from_user')
 
     class Meta:
         model = Task
         fields = ['pk','title', 'description', 'status', 'user']
 
-    # def get_userid_from_user(self, tasks):
-    #     email = tasks.user.email
-    #     print("inside serializer", email)
-    #     return email
 
-#Task Serializer create serializer
+#Task create serializer
 class TaskCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Task
         fields = ['title', 'description', 'status', 'user']
         
-
+#Task update serializer
 class TaskUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
