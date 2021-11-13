@@ -1,13 +1,15 @@
 from django.http import response
 from .models import Task
 from rest_framework.response import Response
-from todoapp.serializers import LoginSerializer, TaskSerializer, TaskUpdateSerializer, RegisterSerializer, LogoutSerializer
+from todoapp.serializers import LoginSerializer, TaskCreateSerializer, TaskUpdateSerializer, RegisterSerializer, LogoutSerializer, TaskGetSerializer
 from rest_framework.generics import GenericAPIView
 from rest_framework import status, permissions
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
-#Sign up API
+# Sign up API
+# Url: https://<your-domain>/api/signup
+# Headers: Authorization: JWT <token>
 class SignUpView(GenericAPIView):
 
     serializer_class = RegisterSerializer
@@ -23,7 +25,9 @@ class SignUpView(GenericAPIView):
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 
-# # Login APi
+# Login APi
+# Url: https://<your-domain>/api/signin
+# Headers: Authorization: JWT <token>
 class SignInView(GenericAPIView):
 
 
@@ -36,6 +40,8 @@ class SignInView(GenericAPIView):
 
 
 #Logout API
+# Url: https://<your-domain>/api/logout
+# Headers: Authorization: JWT <token>
 class LogOutView(GenericAPIView):
     
     serializer_class = LogoutSerializer
@@ -50,26 +56,32 @@ class LogOutView(GenericAPIView):
         return Response("Successfully Logout", status=status.HTTP_204_NO_CONTENT)
 
 # CRUD operation without Primary key
+# Url: https://<your-domain>/api/task
+# Headers: Authorization: JWT <token>
 class taskList(GenericAPIView):
 
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
-   
-        tasks = Task.objects.all()
-        user = request.user.pk
+        
+        #serializer_class = TaskGetSerializer
+        
+        user = self.request.user
         print(user)
-        serializer = TaskSerializer(tasks)
-        print(serializer)
-        if serializer['user'] != user:
-            return Response({'response':"You don't have permission to fetch the data"})
+        tasks = Task.objects.filter(user=user)
+        
+        #print(tasks.user)
+        # if task_test.user != user:
+        #     return Response({'response': "You don't have permission to edit that."})
+        
+        serializer = TaskGetSerializer(tasks, many= True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
         data = request.data
         data['user'] = request.user.pk
-        serializer = TaskSerializer(data=data)
+        serializer = TaskCreateSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -77,23 +89,29 @@ class taskList(GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_406_NOT_ACCEPTABLE)
 
 
-#CRUD operation based on the primary key
+# CRUD operation based on the primary key
+# Url: https://<your-domain>/api/task/<int:pk>
+# Headers: Authorization: JWT <token>
 class taskPrimarykeybased(GenericAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
     
-    def get(self, request, pk):
+    # def get(self, request):
 
-        tasks = Task.objects.get(user=pk)
-        user = request.user
-        if tasks.user != user:
-            return Response("You don't have permission to fetch that")
-
-        serializer = TaskSerializer(tasks)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    #     user = self.request.user
+    #     print(user)
+    #     tasks = Task.objects.filter(user=user)
+        
+    #     #print(tasks.user)
+    #     # if task_test.user != user:
+    #     #     return Response({'response': "You don't have permission to edit that."})
+        
+    #     serializer = TaskGetSerializer(tasks, many= True)
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
         
     def put(self, request, pk):
-        tasks = Task.objects.get(user=pk)
-        user = request.user
-
+        user = self.request.user
+        tasks = Task.objects.get(id=pk)
         if tasks.user != user:
             return Response({'response': "You don't have permission to edit that."})
 
@@ -107,7 +125,7 @@ class taskPrimarykeybased(GenericAPIView):
 
 
     def delete(self, request, pk):
-        tasks = Task.objects.get(user=pk)
+        tasks = Task.objects.get(id=pk)
         user = request.user
 
         if tasks.user != user:
