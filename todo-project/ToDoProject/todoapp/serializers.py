@@ -8,16 +8,10 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 class TaskGetSerializer(serializers.ModelSerializer):
 
-    #email = serializers.SerializerMethodField('get_userid_from_user')
-
     class Meta:
         model = Task
         fields = ['pk','title', 'description', 'status', 'user']
 
-    # def get_userid_from_user(self, tasks):
-    #     email = tasks.user.email
-    #     print("inside serializer", email)
-    #     return email
 
 #Task Serializer create serializer
 class TaskCreateSerializer(serializers.ModelSerializer):

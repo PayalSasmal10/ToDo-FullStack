@@ -64,16 +64,10 @@ class taskList(GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
-        
-        #serializer_class = TaskGetSerializer
-        
+                
         user = self.request.user
         print(user)
         tasks = Task.objects.filter(user=user)
-        
-        #print(tasks.user)
-        # if task_test.user != user:
-        #     return Response({'response': "You don't have permission to edit that."})
         
         serializer = TaskGetSerializer(tasks, many= True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -95,20 +89,7 @@ class taskList(GenericAPIView):
 class taskPrimarykeybased(GenericAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
-    
-    # def get(self, request):
-
-    #     user = self.request.user
-    #     print(user)
-    #     tasks = Task.objects.filter(user=user)
-        
-    #     #print(tasks.user)
-    #     # if task_test.user != user:
-    #     #     return Response({'response': "You don't have permission to edit that."})
-        
-    #     serializer = TaskGetSerializer(tasks, many= True)
-    #     return Response(serializer.data, status=status.HTTP_200_OK)
-        
+            
     def put(self, request, pk):
         user = self.request.user
         tasks = Task.objects.get(id=pk)
