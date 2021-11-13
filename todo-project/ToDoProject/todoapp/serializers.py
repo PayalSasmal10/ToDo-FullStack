@@ -5,7 +5,7 @@ from .models import Task, User
 from django.contrib import auth
 from rest_framework_simplejwt.tokens import RefreshToken
 
-
+# Task fetching serializer
 class TaskGetSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -13,14 +13,14 @@ class TaskGetSerializer(serializers.ModelSerializer):
         fields = ['pk','title', 'description', 'status', 'user']
 
 
-#Task Serializer create serializer
+#Task create serializer
 class TaskCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Task
         fields = ['title', 'description', 'status', 'user']
         
-
+#Task update serializer
 class TaskUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
