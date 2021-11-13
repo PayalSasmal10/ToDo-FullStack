@@ -3,17 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
-# Create your models here.
-
-
-class Task(models.Model):
-    title = models.CharField(max_length=100)
-    description = models.TextField(blank=True)
-    status = models.CharField(max_length=20, default='todo')
-
-    def __str__(self):
-        return self.title
-
+# User manager for custom user model
 class UserManager(BaseUserManager):
 
     def create_user(self, first_name, last_name, email, password=None):
@@ -39,7 +29,7 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
-
+# Custom user model
 class User(AbstractBaseUser,PermissionsMixin):
     
     first_name = models.CharField(max_length=255, db_index=True)
@@ -65,3 +55,13 @@ class User(AbstractBaseUser,PermissionsMixin):
             'refresh': str(refresh),
             'access': str(refresh.access_token)
         }
+
+# Task Model
+class Task(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    status = models.CharField(max_length=20, default='todo')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
