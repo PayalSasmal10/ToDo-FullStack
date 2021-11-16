@@ -14,7 +14,7 @@ from .utils import Util
 
 
 # Sign up API
-# Url: https://<your-domain>/api/signup
+# Url: https://<your-domain>/app/signup
 # Headers: Authorization: JWT <token>
 class SignUpView(GenericAPIView):
 
@@ -32,7 +32,7 @@ class SignUpView(GenericAPIView):
 
 
 # Login APi
-# Url: https://<your-domain>/api/signin
+# Url: https://<your-domain>/app/signin
 # Headers: Authorization: JWT <token>
 class SignInView(GenericAPIView):
 
@@ -46,7 +46,7 @@ class SignInView(GenericAPIView):
 
 
 # Logout API
-# Url: https://<your-domain>/api/logout
+# Url: https://<your-domain>/app/logout
 # Headers: Authorization: JWT <token>
 class LogOutView(GenericAPIView):
     
@@ -62,7 +62,7 @@ class LogOutView(GenericAPIView):
         return Response("Successfully Logout", status=status.HTTP_204_NO_CONTENT)
 
 # CRUD operation without Primary key
-# Url: https://<your-domain>/api/task
+# Url: https://<your-domain>/app/task
 # Headers: Authorization: JWT <token>
 class taskList(GenericAPIView):
 
@@ -90,7 +90,7 @@ class taskList(GenericAPIView):
 
 
 # CRUD operation based on the primary key
-# Url: https://<your-domain>/api/task/<int:pk>
+# Url: https://<your-domain>/app/task/<int:pk>
 # Headers: Authorization: JWT <token>
 class taskPrimarykeybased(GenericAPIView):
     authentication_classes = [JWTAuthentication]
