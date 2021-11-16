@@ -1,9 +1,11 @@
 from rest_framework import serializers
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.exceptions import TokenError
+from yaml import serialize
 from .models import Task, User
 from django.contrib import auth
 from rest_framework_simplejwt.tokens import RefreshToken
+
 
 # Task fetching serializer
 class TaskGetSerializer(serializers.ModelSerializer):
@@ -64,11 +66,12 @@ class LoginSerializer(serializers.ModelSerializer):
 
     def get_tokens(self, obj):
         user = User.objects.get(email=obj['email'])
-
+        print(user.tokens())
         return {
             'refresh': user.tokens()['refresh'],
             'access': user.tokens()['access']
         }
+        
     class Meta:
         model = User
         fields = ['email','password','first_name','last_name','tokens']
@@ -112,3 +115,13 @@ class LogoutSerializer(serializers.ModelSerializer):
 
         except TokenError:
             self.fail("bad_token")
+
+
+class RequestPasswordResetEmailSerializer(serializers.Serializer):
+    
+    email = serializers.EmailField(min_length=2)
+
+    class Meta:
+        fields = ['email']
+
+    
