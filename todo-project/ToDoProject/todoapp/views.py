@@ -7,7 +7,7 @@ from rest_framework import serializers, status, permissions
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import force_str, smart_str, smart_bytes, DjangoUnicodeDecodeError
-from django.utils.http import urlsafe_base64_encode
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
 from .utils import Util
@@ -141,22 +141,14 @@ class RequestPasswordResetEmail(GenericAPIView):
 
         if User.objects.filter(email=email).exists():
             user = User.objects.get(email=email)
-            print(user.id)
             uidbase64 = urlsafe_base64_encode(smart_bytes(user.id))
-            print("uidbase64",uidbase64)
             token = PasswordResetTokenGenerator().make_token(user)
-            print("token",token)
             current_site = get_current_site(request=request).domain
-            print("current_site",current_site)
             relativeLink = reverse('password-reset-confirmation', kwargs={'uidbase64': uidbase64, 'token': token})
-            print("relativeLink", relativeLink)
             redirect_url = request.data.get('redirect_url', '')
             absurl = 'http://'+current_site+ relativeLink
-            print('absurl',absurl)
             email_body = 'Hello, \n Use link below to reset your password \n' + absurl + "?redirect_url="+redirect_url
-            print('email_body',email_body)
             data = {'email_body': email_body, 'to_email': user.email, 'email_subject': 'Reset your password'}
-            print('data:',data)
             Util.send_email(data)
           
             return Response({"success:", "We have sent you a link to reset your password"}, status=status.HTTP_200_OK)
@@ -168,6 +160,14 @@ class RequestPasswordResetEmail(GenericAPIView):
 class PasswordCheckTokenAPI(GenericAPIView):
 
     def get(self, request, uidbase64, token):
-        pass
+        
+        try:
+            id = smart_str(urlsafe_base64_decode(uidbase64))
+            user = User.objects.get(id=id)
+            if not PasswordResetTokenGenerator().check_token(user):
+                return Response({'error:','Token is not valid, please request for new one'}, status=status.HTTP_401_UNAUTHORIZED)
 
+            return Response({'success':True,'message':'Credential is valid','uidbase64':uidbase64,'token':token}, status=status.HTTP_200_OK)
 
+        except DjangoUnicodeDecodeError as identifier:
+            return Response({'error:','Token is not valid, please request for new one'}, status=status.HTTP_401_UNAUTHORIZED)
