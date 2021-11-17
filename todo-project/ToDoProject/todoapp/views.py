@@ -194,6 +194,9 @@ class SetNewPasswordAPIView(GenericAPIView):
 
 
 
+# Change password for user
+# Url: https://<your-domain>/app/change-password
+# Headers: Authorization: JWT <token>
 class ChangePasswordAPIView(GenericAPIView):
     serializer_class = ChangePasswordSerializer
     permissions_classes = [permissions.IsAuthenticated]
