@@ -100,7 +100,7 @@ class taskPrimarykeybased(GenericAPIView):
         print(user)
         tasks = Task.objects.get(id=pk)
         
-        serializer = TaskGetSerializer(tasks, many= True)
+        serializer = TaskGetSerializer(tasks)
         return Response(serializer.data, status=status.HTTP_200_OK)
             
     def put(self, request, pk):
