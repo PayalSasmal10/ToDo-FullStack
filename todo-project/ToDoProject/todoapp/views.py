@@ -1,7 +1,7 @@
 from django.http.response import Http404
 from .models import Task, User
 from rest_framework.response import Response
-from todoapp.serializers import LoginSerializer, TaskCreateSerializer, TaskUpdateSerializer, RegisterSerializer, LogoutSerializer, TaskGetSerializer, RequestPasswordResetEmailSerializer
+from todoapp.serializers import LoginSerializer, TaskCreateSerializer, TaskUpdateSerializer, RegisterSerializer, LogoutSerializer, TaskGetSerializer, RequestPasswordResetEmailSerializer, SetNewPasswordSerializer
 from rest_framework.generics import GenericAPIView
 from rest_framework import serializers, status, permissions
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -184,4 +184,10 @@ class PasswordCheckTokenAPI(GenericAPIView):
 
 
 class SetNewPasswordAPIView(GenericAPIView):
-    pass
+    serializer_class = SetNewPasswordSerializer
+
+    def patch(self, request):
+        serializer = self.serializer_class(data =request.data)
+
+        serializer.is_valid(raise_exception=True)
+        return Response({'success':True, 'message':'Password reset successfully'}, status=status.HTTP_202_ACCEPTED)
