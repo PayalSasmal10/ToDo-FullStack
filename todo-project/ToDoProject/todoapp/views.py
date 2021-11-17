@@ -97,8 +97,10 @@ class taskPrimarykeybased(GenericAPIView):
 
     def get(self, request, pk):
         user = self.request.user
-        print(user)
         tasks = Task.objects.get(id=pk)
+
+        if tasks.user != user:
+            return Response({'response': "You don't have permission to fetch that."})
         
         serializer = TaskGetSerializer(tasks)
         return Response(serializer.data, status=status.HTTP_200_OK)
