@@ -72,7 +72,6 @@ class taskList(GenericAPIView):
     def get(self, request):
                 
         user = self.request.user
-        print(user)
         tasks = Task.objects.filter(user=user)
         
         serializer = TaskGetSerializer(tasks, many= True)
@@ -95,6 +94,14 @@ class taskList(GenericAPIView):
 class taskPrimarykeybased(GenericAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, pk):
+        user = self.request.user
+        print(user)
+        tasks = Task.objects.get(id=pk)
+        
+        serializer = TaskGetSerializer(tasks, many= True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
             
     def put(self, request, pk):
         user = self.request.user
@@ -164,10 +171,15 @@ class PasswordCheckTokenAPI(GenericAPIView):
         try:
             id = smart_str(urlsafe_base64_decode(uidbase64))
             user = User.objects.get(id=id)
-            if not PasswordResetTokenGenerator().check_token(user):
+            if not PasswordResetTokenGenerator().check_token(user,token):
                 return Response({'error:','Token is not valid, please request for new one'}, status=status.HTTP_401_UNAUTHORIZED)
 
             return Response({'success':True,'message':'Credential is valid','uidbase64':uidbase64,'token':token}, status=status.HTTP_200_OK)
 
         except DjangoUnicodeDecodeError as identifier:
             return Response({'error:','Token is not valid, please request for new one'}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+
+class SetNewPasswordAPIView(GenericAPIView):
+    pass
