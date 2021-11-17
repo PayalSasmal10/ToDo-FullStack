@@ -1,7 +1,7 @@
 from django.http.response import Http404
 from .models import Task, User
 from rest_framework.response import Response
-from todoapp.serializers import LoginSerializer, TaskCreateSerializer, TaskUpdateSerializer, RegisterSerializer, LogoutSerializer, TaskGetSerializer, RequestPasswordResetEmailSerializer, SetNewPasswordSerializer
+from todoapp.serializers import LoginSerializer, TaskCreateSerializer, TaskUpdateSerializer, RegisterSerializer, LogoutSerializer, TaskGetSerializer, RequestPasswordResetEmailSerializer, SetNewPasswordSerializer, ChangePasswordSerializer
 from rest_framework.generics import GenericAPIView
 from rest_framework import serializers, status, permissions
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -191,3 +191,26 @@ class SetNewPasswordAPIView(GenericAPIView):
 
         serializer.is_valid(raise_exception=True)
         return Response({'success':True, 'message':'Password reset successfully'}, status=status.HTTP_202_ACCEPTED)
+
+
+
+class ChangePasswordAPIView(GenericAPIView):
+    serializer_class = ChangePasswordSerializer
+    permissions_classes = [permissions.IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+
+    def put(self, request):
+        user = self.request.user
+        serializer = self.serializer_class(data=request.data)
+
+        if serializer.is_valid():
+            if not user.check_password(serializer.data.get('old_password')):
+                return Response({'old_password': 'Incorrect Old Password'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            user.set_password(serializer.data.get('new_password'))
+            user.save()
+
+            return Response({'success':'Password Updated Successfully....'}, status=status.HTTP_200_OK)
+        
+        return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)

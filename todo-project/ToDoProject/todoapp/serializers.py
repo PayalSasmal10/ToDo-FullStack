@@ -157,3 +157,11 @@ class SetNewPasswordSerializer(serializers.Serializer):
 
         return super().validate(attrs)
     
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+    
+    class Meta:
+        fields = ['old_password', 'new_password']
