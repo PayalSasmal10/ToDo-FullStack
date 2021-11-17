@@ -3,8 +3,8 @@ import Modal from '../UI/Modal/Modal';
 import ToDoListBox from '../UI/ToDoListBox/ToDoListBox';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import './project-todo.scss';
 import AuthContext from '../../store/auth-context';
+import './project-todo.scss';
 
 const ProjectToDo = (props) => {
   const [todoTitle, setTodoTitle] = useState('');

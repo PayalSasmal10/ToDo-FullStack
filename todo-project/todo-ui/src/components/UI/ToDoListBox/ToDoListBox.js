@@ -1,6 +1,7 @@
+import React, { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
-import React from 'react';
+import AuthContext from '../../../store/auth-context';
 import './ToDoListBox.scss';
 
 const ToDoListBox = ({
@@ -17,11 +18,19 @@ const ToDoListBox = ({
   getTodoLists,
   drag,
 }) => {
+  const authCtx = useContext(AuthContext);
+
   // Delete handler
   const todoDeleteHandler = () => {
-    axios.delete('/task/' + id).then((response) => {
-      getTodoLists();
-    });
+    axios
+      .delete(`/task/${id}`, {
+        headers: {
+          Authorization: `JWT ${authCtx.token}`,
+        },
+      })
+      .then((response) => {
+        getTodoLists();
+      });
   };
 
   // List update handler
