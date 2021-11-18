@@ -124,9 +124,9 @@ const Login = ({ loginSwitch, setLoginSwitch }) => {
           className={passwordInputClass}
         />
         <br />
-        <input type="checkbox" name="remember" />
+        {/* <input type="checkbox" name="remember" />
         <label htmlFor="remember">Remember me</label>
-        <br />
+        <br /> */}
         <button type="submit" className="submitBtn" disabled={!formIsValid}>
           {!loading ? 'Login' : 'Loading...'}
         </button>

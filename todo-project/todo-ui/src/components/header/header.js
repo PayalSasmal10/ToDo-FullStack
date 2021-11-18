@@ -1,20 +1,19 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import AuthContext from '../../store/auth-context';
 import './header.scss';
 
 const Header = (props) => {
-  const [drpDown, setDropDown] = useState(false);
+  // const [drpDown, setDropDown] = useState(false);
   const authCtx = useContext(AuthContext);
   const user = authCtx.firstName;
 
-  const dropDown = (
-    <div className="dropdown-class">
-      <span>LogOut</span>
-    </div>
-  );
+  // const dropDown = (
+  //   <div className="dropdown-class">
+  //     <span>LogOut</span>
+  //   </div>
+  // );
 
-  console.log(drpDown);
   return (
     <div className="header">
       <div className="nav-section">
@@ -23,10 +22,10 @@ const Header = (props) => {
             <li>
               <FontAwesomeIcon icon="question-circle" />
             </li>
-            <li onClick={() => setDropDown(!drpDown)}>
+            {/* <li onClick={() => setDropDown(!drpDown)}>
               <FontAwesomeIcon icon="chevron-down" />
               {drpDown && dropDown}
-            </li>
+            </li> */}
             <li>Hi, {user}</li>
           </ul>
         </nav>
