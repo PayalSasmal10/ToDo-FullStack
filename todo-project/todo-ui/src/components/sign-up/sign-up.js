@@ -13,7 +13,6 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
   const [firstNameTouched, setFirstNameTouched] = useState(false);
   const [lastNameTouched, setLastNameTouched] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  // const []
 
   // Email validation
   const emailValid = email.trim() !== '' && email.includes('@');
