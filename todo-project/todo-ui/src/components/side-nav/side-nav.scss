@@ -24,6 +24,7 @@
 
 .sidenav-section,
 .s2-1 {
+  box-sizing: border-box;
   display: flex;
   margin: 2rem 5rem;
   cursor: pointer;
@@ -32,10 +33,10 @@
     margin-left: 6px;
   }
   span:hover {
-    color: green;
+    color: #000;
     background: rgb(240, 240, 240);
     font-weight: 600;
-    transition: 0.2s;
+    transition: 0.1s ease-in;
   }
 }
 
