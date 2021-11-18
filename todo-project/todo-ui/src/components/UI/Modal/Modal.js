@@ -10,6 +10,8 @@ const Modal = ({
   todoNoteHandler,
   todoSubmitHandler,
   todoStatusHandler,
+  status,
+  todoStatus,
 }) => {
   if (!open) {
     return null;
@@ -37,9 +39,17 @@ const Modal = ({
         </div>
         <div className="close-save">
           <select onChange={todoStatusHandler}>
-            <option value="todo">To Do</option>
-            <option value="inprogress">In Progress</option>
-            <option value="completed">Completed</option>
+            {todoStatus.map((statuses) => {
+              return (
+                <option
+                  value={statuses.value}
+                  key={statuses.value}
+                  selected={status === statuses.value ? true : false}
+                >
+                  {statuses.displayValue}
+                </option>
+              );
+            })}
           </select>
           <div>
             <button className="cancel" onClick={() => setOpen(!open)}>

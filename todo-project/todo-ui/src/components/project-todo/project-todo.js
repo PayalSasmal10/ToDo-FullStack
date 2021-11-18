@@ -15,6 +15,11 @@ const ProjectToDo = (props) => {
   const [loading, setLoading] = useState(false);
   const [dragCardId, setDragCardId] = useState();
   const [todoId, setTodoId] = useState('');
+  const [todoStatus, setTodoStatus] = useState([
+    { value: 'todo', displayValue: 'Todo' },
+    { value: 'inprogress', displayValue: 'In Progress' },
+    { value: 'completed', displayValue: 'Completed' },
+  ]);
 
   const authCtx = useContext(AuthContext);
 
@@ -164,8 +169,6 @@ const ProjectToDo = (props) => {
     e.preventDefault();
   };
 
-  console.log('todoId', todoId);
-
   return (
     <div className="projects">
       <div className="add-task-div">
@@ -269,6 +272,8 @@ const ProjectToDo = (props) => {
         todoNoteHandler={todoNoteHandler}
         todoStatusHandler={todoStatusHandler}
         todoSubmitHandler={todoSubmitHandler}
+        todoStatus={todoStatus}
+        status={status}
       />
     </div>
   );
