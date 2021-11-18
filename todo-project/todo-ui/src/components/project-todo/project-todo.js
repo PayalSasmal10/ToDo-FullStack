@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Modal from '../UI/Modal/Modal';
 import ToDoListBox from '../UI/ToDoListBox/ToDoListBox';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import AuthContext from '../../store/auth-context';
 import './project-todo.scss';
 
 const ProjectToDo = (props) => {
@@ -14,12 +15,25 @@ const ProjectToDo = (props) => {
   const [loading, setLoading] = useState(false);
   const [dragCardId, setDragCardId] = useState();
   const [todoId, setTodoId] = useState('');
+  const [todoStatus, setTodoStatus] = useState([
+    { value: 'todo', displayValue: 'Todo' },
+    { value: 'inprogress', displayValue: 'In Progress' },
+    { value: 'completed', displayValue: 'Completed' },
+  ]);
+
+  const authCtx = useContext(AuthContext);
 
   // Get request
   const getTodoLists = () => {
-    axios.get('/task').then((response) => {
-      setTodoValues(response.data);
-    });
+    axios
+      .get('/task', {
+        headers: {
+          Authorization: `JWT ${authCtx.token}`,
+        },
+      })
+      .then((response) => {
+        setTodoValues(response.data);
+      });
   };
 
   useEffect(() => {
@@ -49,11 +63,19 @@ const ProjectToDo = (props) => {
 
     if (!todoId) {
       axios
-        .post('/task', {
-          title: todoTitle,
-          description: todoNote,
-          status: status,
-        })
+        .post(
+          '/task',
+          {
+            title: todoTitle,
+            description: todoNote,
+            status: status,
+          },
+          {
+            headers: {
+              Authorization: `JWT ${authCtx.token}`,
+            },
+          }
+        )
         .then((response) => {
           getTodoLists();
         });
@@ -64,12 +86,20 @@ const ProjectToDo = (props) => {
       setStatus('todo');
     } else {
       axios
-        .put(`/task/${todoId}`, {
-          id: todoId,
-          title: todoTitle,
-          description: todoNote,
-          status: status,
-        })
+        .put(
+          `/task/${todoId}`,
+          {
+            // id: todoId,
+            title: todoTitle,
+            description: todoNote,
+            status: status,
+          },
+          {
+            headers: {
+              Authorization: `JWT ${authCtx.token}`,
+            },
+          }
+        )
         .then((response) => {
           setIsOpen(!isOpen);
           getTodoLists();
@@ -101,31 +131,43 @@ const ProjectToDo = (props) => {
 
     // Getting the task value using id and then updating the status of that task after element is dropped to another section
     setTimeout(() => {
-      axios.get(`/task/${dragCardId}`).then((response) => {
-        axios
-          .put(`/task/${dragCardId}`, {
-            id: dragCardId,
-            title: response.data.title,
-            description: response.data.description,
-            status:
-              cardNum === 'card1'
-                ? 'todo'
-                : cardNum === 'card2'
-                ? 'inprogress'
-                : 'completed',
-          })
-          .then((response) => {
-            console.log('Data Updated');
-          });
-      });
+      axios
+        .get(`/task/${dragCardId}`, {
+          headers: {
+            Authorization: `JWT ${authCtx.token}`,
+          },
+        })
+        .then((response) => {
+          axios
+            .put(
+              `/task/${dragCardId}`,
+              {
+                // id: dragCardId,
+                title: response.data.title,
+                description: response.data.description,
+                status:
+                  cardNum === 'card1'
+                    ? 'todo'
+                    : cardNum === 'card2'
+                    ? 'inprogress'
+                    : 'completed',
+              },
+              {
+                headers: {
+                  Authorization: `JWT ${authCtx.token}`,
+                },
+              }
+            )
+            .then((response) => {
+              console.log('Data Updated');
+            });
+        });
     }, 1000);
   };
 
   const dragOver = (e) => {
     e.preventDefault();
   };
-
-  console.log('todoId', todoId);
 
   return (
     <div className="projects">
@@ -149,8 +191,8 @@ const ProjectToDo = (props) => {
                     setTodoNote={setTodoNote}
                     status={todo.status}
                     setStatus={setStatus}
-                    id={todo.id}
-                    key={todo.id}
+                    id={todo.pk}
+                    key={todo.pk}
                     setTodoId={setTodoId}
                     open={isOpen}
                     setOpen={setIsOpen}
@@ -177,8 +219,8 @@ const ProjectToDo = (props) => {
                     setTodoNote={setTodoNote}
                     status={todo.status}
                     setStatus={setStatus}
-                    key={todo.id}
-                    id={todo.id}
+                    key={todo.pk}
+                    id={todo.pk}
                     setTodoId={setTodoId}
                     open={isOpen}
                     setOpen={setIsOpen}
@@ -205,8 +247,8 @@ const ProjectToDo = (props) => {
                     setTodoNote={setTodoNote}
                     status={todo.status}
                     setStatus={setStatus}
-                    key={todo.id}
-                    id={todo.id}
+                    key={todo.pk}
+                    id={todo.pk}
                     setTodoId={setTodoId}
                     open={isOpen}
                     setOpen={setIsOpen}
@@ -230,6 +272,8 @@ const ProjectToDo = (props) => {
         todoNoteHandler={todoNoteHandler}
         todoStatusHandler={todoStatusHandler}
         todoSubmitHandler={todoSubmitHandler}
+        todoStatus={todoStatus}
+        status={status}
       />
     </div>
   );

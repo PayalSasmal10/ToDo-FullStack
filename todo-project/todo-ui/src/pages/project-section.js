@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faChevronDown,
@@ -17,6 +17,8 @@ import {
 import Header from '../components/header/header';
 import SideNav from '../components/side-nav/side-nav';
 import ProjectToDo from '../components/project-todo/project-todo';
+import Settings from '../components/settings-page/settings-page';
+import AuthContext from '../store/auth-context';
 import './project-section.scss';
 
 library.add(
@@ -35,12 +37,14 @@ library.add(
 );
 
 const ProjectSection = () => {
+  const authCtx = useContext(AuthContext);
+
   return (
     <div className="project-section">
       <SideNav />
       <div className="main-section">
         <Header />
-        <ProjectToDo />
+        {!authCtx.settingOpen ? <ProjectToDo /> : <Settings />}
       </div>
     </div>
   );

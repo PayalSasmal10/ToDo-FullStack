@@ -1,14 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AuthContext from '../../store/auth-context';
 import { Link, useHistory } from 'react-router-dom';
 import './side-nav.scss';
 
 const SideNav = () => {
-  const sideNavHandler = () => {
-    alert('SideNav clicked');
-  };
-
   const authCtx = useContext(AuthContext);
 
   const history = useHistory();
@@ -18,6 +14,14 @@ const SideNav = () => {
     history.replace('/');
   };
 
+  const settingPageHandler = (e) => {
+    authCtx.settingSetter(true);
+  };
+
+  const homePageHandler = () => {
+    authCtx.settingSetter(false);
+  };
+
   return (
     <div className="sidenav">
       <h2>
@@ -25,21 +29,13 @@ const SideNav = () => {
       </h2>
 
       <div className="section1">
-        <div className="sidenav-section" onClick={sideNavHandler}>
+        <div className="sidenav-section" onClick={homePageHandler}>
           <FontAwesomeIcon icon="home" />
           <span>Home</span>
         </div>
-        {/* <div className="sidenav-section" onClick={sideNavHandler}>
-          <FontAwesomeIcon icon="tasks" />
-          <span>Project</span>
-        </div>
-        <div className="sidenav-section" onClick={sideNavHandler}>
-          <FontAwesomeIcon icon="calendar" />
-          <span>Calendar</span>
-        </div> */}
       </div>
       <div className="section2">
-        <div className="s2-1" onClick={sideNavHandler}>
+        <div className="s2-1" onClick={settingPageHandler}>
           <FontAwesomeIcon icon="cog" />
           <span>Settings</span>
         </div>

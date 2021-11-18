@@ -10,6 +10,8 @@ const Modal = ({
   todoNoteHandler,
   todoSubmitHandler,
   todoStatusHandler,
+  status,
+  todoStatus,
 }) => {
   if (!open) {
     return null;
@@ -34,19 +36,29 @@ const Modal = ({
             onChange={todoNoteHandler}
           ></textarea>
           <hr />
-          <select onChange={todoStatusHandler}>
-            <option value="todo">To Do</option>
-            <option value="inprogress">In Progress</option>
-            <option value="completed">Completed</option>
-          </select>
         </div>
         <div className="close-save">
-          <button className="cancel" onClick={() => setOpen(!open)}>
-            Cancel
-          </button>
-          <button type="submit" className="save" onClick={todoSubmitHandler}>
-            Save Changes
-          </button>
+          <select onChange={todoStatusHandler}>
+            {todoStatus.map((statuses) => {
+              return (
+                <option
+                  value={statuses.value}
+                  key={statuses.value}
+                  selected={status === statuses.value ? true : false}
+                >
+                  {statuses.displayValue}
+                </option>
+              );
+            })}
+          </select>
+          <div>
+            <button className="cancel" onClick={() => setOpen(!open)}>
+              Cancel
+            </button>
+            <button type="submit" className="save" onClick={todoSubmitHandler}>
+              Save Changes
+            </button>
+          </div>
         </div>
       </div>
     </>
