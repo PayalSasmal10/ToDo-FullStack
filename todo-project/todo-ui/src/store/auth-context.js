@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+let logoutTimer;
 
 const AuthContext = React.createContext({
   token: '',
@@ -11,8 +13,37 @@ const AuthContext = React.createContext({
   settingSetter: (settingOpen) => {},
 });
 
+// Calculate remaining time
+const calculateRemainingTime = (expirationTime) => {
+  const currentTime = new Date().getTime();
+  const adjExpirationTime = new Date(expirationTime).getTime();
+
+  const remainingDuration = adjExpirationTime - currentTime;
+
+  return remainingDuration;
+};
+
+const retrieveStoredToken = () => {
+  const storedToken = localStorage.getItem('token');
+  const storedExpirationDate = localStorage.getItem('expirationTime');
+
+  const remainingTime = calculateRemainingTime(storedExpirationDate);
+
+  if (remainingTime <= 60000) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('expirationTime');
+    return null;
+  }
+
+  return { token: storedToken, remainingTime };
+};
+
 export const AuthContextProvider = (props) => {
-  const initialToken = localStorage.getItem('token');
+  const tokenData = retrieveStoredToken();
+  let initialToken;
+  if (tokenData) {
+    initialToken = tokenData.token;
+  }
   const [token, setToken] = useState(initialToken);
 
   const initialName = localStorage.getItem('name');
@@ -26,14 +57,30 @@ export const AuthContextProvider = (props) => {
     setToken(token);
     localStorage.setItem('token', token);
 
-    setTimeout(logoutHandler, 3600000);
+    const expirationTime = new Date(new Date().getTime() + 3600000);
+    localStorage.setItem('expirationTime', expirationTime);
+
+    const remainingTime = calculateRemainingTime(expirationTime);
+    logoutTimer = setTimeout(logoutHandler, remainingTime);
   };
 
   const logoutHandler = () => {
     setToken(null);
     localStorage.removeItem('token');
     localStorage.removeItem('name');
+    localStorage.removeItem('expirationTime');
+
+    if (logoutTimer) {
+      clearTimeout(logoutTimer);
+    }
   };
+
+  useEffect(() => {
+    if (tokenData) {
+      console.log('rt', tokenData.remainingTime);
+      logoutTimer = setTimeout(logoutHandler, tokenData.remainingTime);
+    }
+  }, [tokenData]);
 
   const firstNameHandler = (firstName) => {
     setFirstName(firstName);
