@@ -15,7 +15,7 @@ const HomePage = () => {
       <div className="content">
         <img src={svg} alt="task logo" />
         <h2>
-          Keeping track of your tasks is much easier now using{' '}
+          Keeping track of your tasks are much easier now using{' '}
           <strong>Task Tracker</strong>.
         </h2>
       </div>
