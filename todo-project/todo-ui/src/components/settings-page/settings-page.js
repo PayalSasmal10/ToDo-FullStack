@@ -7,15 +7,17 @@ import './settings-page.scss';
 const Settings = () => {
   const [loading, setLoading] = useState(false);
   const [oldPassword, setOldPassword] = useState('');
+  const [oldPasswordTouched, setOldPasswordTouched] = useState(false);
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordTouched, setNewPasswordTouched] = useState(false);
   const [newPasswordAgain, setNewPasswordAgain] = useState('');
   const [newPasswordAgainTouched, setNewPasswordAgainTouched] = useState(false);
-  const [isNewPwdEqual, setIsNewPwdEqual] = useState(false);
 
   const authCtx = useContext(AuthContext);
 
   // Password Validation
+  const oldPasswordValid = oldPassword.trim() !== '' && oldPassword.length >= 8;
+  const oldPasswordIsInvalid = !oldPasswordValid && oldPasswordTouched;
   const newPasswordValid = newPassword.trim() !== '' && newPassword.length >= 8;
   const newPasswordIsInvalid = !newPasswordValid && newPasswordTouched;
   const newPasswordAgainValid =
@@ -45,6 +47,10 @@ const Settings = () => {
   };
 
   // Blur Handler
+  const oldPasswordBlurHandler = () => {
+    setOldPasswordTouched(true);
+  };
+
   const newPasswordBlurHandler = () => {
     setNewPasswordTouched(true);
   };
@@ -53,6 +59,9 @@ const Settings = () => {
     setNewPasswordAgainTouched(true);
   };
 
+  const oldPasswordInputClass = oldPasswordIsInvalid
+    ? 'form-pwd invalid'
+    : 'form-pwd';
   const passwordInputClass = newPasswordIsInvalid
     ? 'form-pwd invalid'
     : 'form-pwd';
@@ -103,7 +112,8 @@ const Settings = () => {
             placeholder="Enter your old password"
             value={oldPassword}
             onChange={oldPasswordHandler}
-            className="form-pwd"
+            onBlur={oldPasswordBlurHandler}
+            className={oldPasswordInputClass}
           />
           <br />
           <label htmlFor="newPassword">New Password*</label>
