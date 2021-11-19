@@ -44,6 +44,9 @@ const SideNav = () => {
           <span onClick={logoutHandler}>Logout</span>
         </div>
       </div>
+      <div className="copyright1">
+        &copy; {new Date().getFullYear()} &#183; Task Tracker
+      </div>
     </div>
   );
 };
