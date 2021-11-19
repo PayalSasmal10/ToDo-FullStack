@@ -2,6 +2,7 @@ from django.core.mail import EmailMessage
 
 import threading
 
+#Utili class for sending email for rest password
 class EmailThread(threading.Thread):
     def __init__(self, email):
         self.email = email
