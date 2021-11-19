@@ -120,7 +120,7 @@ class LogoutSerializer(serializers.ModelSerializer):
         except TokenError:
             self.fail("bad_token")
 
-
+# Reset Password Email API Serializer
 class RequestPasswordResetEmailSerializer(serializers.Serializer):
     
     email = serializers.EmailField(min_length=2)
@@ -129,6 +129,7 @@ class RequestPasswordResetEmailSerializer(serializers.Serializer):
         fields = ['email']
 
 
+# Setting New Password Token Serializer
 class SetNewPasswordSerializer(serializers.Serializer):
     password = serializers.CharField(min_length=6, max_length=68, write_only=True)
     token = serializers.CharField(min_length=1,write_only=True)
@@ -158,7 +159,7 @@ class SetNewPasswordSerializer(serializers.Serializer):
         return super().validate(attrs)
     
 
-#Change password
+#Change password serializer
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True)

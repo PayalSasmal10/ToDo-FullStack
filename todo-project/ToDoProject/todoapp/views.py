@@ -131,21 +131,19 @@ class taskPrimarykeybased(GenericAPIView):
         return Response("Task deleted successfully", status=status.HTTP_200_OK)
 
 
+
+# Reset Password Email API
+# Url: https://<your-domain>/app/request-reset-email
+# Headers: Authorization: JWT <token>
 class RequestPasswordResetEmail(GenericAPIView):
 
     serializer_class = RequestPasswordResetEmailSerializer
-
-    print("I am inside password view")
 
     def post(self, request):
 
         serializer = self.serializer_class(data=request.data)
 
-        print(serializer)
-
         email = request.data['email']
-
-        print(email)
 
 
         if User.objects.filter(email=email).exists():
@@ -166,6 +164,10 @@ class RequestPasswordResetEmail(GenericAPIView):
         
 
 
+# Reset Password Token check API
+# Url: https://<your-domain>/app/password-reset/<uidbase64>/<token>
+# Headers: Authorization: JWT <token>
+
 class PasswordCheckTokenAPI(GenericAPIView):
 
     def get(self, request, uidbase64, token):
@@ -182,7 +184,9 @@ class PasswordCheckTokenAPI(GenericAPIView):
             return Response({'error:','Token is not valid, please request for new one'}, status=status.HTTP_401_UNAUTHORIZED)
 
 
-
+# Setting New Password Token
+# Url: https://<your-domain>/app//password-reset-complete
+# Headers: Authorization: JWT <token>
 class SetNewPasswordAPIView(GenericAPIView):
     serializer_class = SetNewPasswordSerializer
 
