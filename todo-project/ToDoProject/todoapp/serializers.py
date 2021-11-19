@@ -5,7 +5,6 @@ from django.utils.http import urlsafe_base64_decode
 from rest_framework import serializers
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.exceptions import TokenError
-from yaml import serialize
 from .models import Task, User
 from django.contrib import auth
 from rest_framework_simplejwt.tokens import RefreshToken
