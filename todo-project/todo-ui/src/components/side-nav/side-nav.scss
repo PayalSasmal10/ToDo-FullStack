@@ -44,7 +44,12 @@
   opacity: 0.6;
   font-size: 0.8rem;
   text-align: center;
-  margin-top: 21vh;
+  margin: 20vh 1rem 0;
+  a {
+    font-weight: bold;
+    color: rgb(0, 50, 90);
+    font-style: italic;
+  }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1400px) {
