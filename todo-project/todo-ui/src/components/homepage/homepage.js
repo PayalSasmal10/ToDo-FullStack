@@ -20,7 +20,9 @@ const HomePage = () => {
         </h2>
       </div>
       <span className="copyright">
-        &copy; {new Date().getFullYear()} &#183; Task Tracker
+        &copy; {new Date().getFullYear()} &#183; Task Tracker | Made with
+        &#10084; by <a href="https://twitter.com/payalsasmal">Payal</a> and{' '}
+        <a href="https://twitter.com/TheKrPrince">Prince</a>
       </span>
     </div>
   );

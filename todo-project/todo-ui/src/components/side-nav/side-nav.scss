@@ -1,7 +1,7 @@
 .sidenav {
   box-sizing: border-box;
   width: 20vw;
-  min-height: 100vh;
+  height: 100vh;
   box-shadow: 0 0 5px #d9d9d9, -20px -20px 60px #ffffff;
   position: fixed;
   font-size: large;
@@ -19,7 +19,7 @@
 }
 
 .section2 {
-  margin: 15rem 0;
+  margin: 15rem 0 0 0;
 }
 
 .sidenav-section,
@@ -40,10 +40,19 @@
   }
 }
 
+.copyright1 {
+  opacity: 0.6;
+  font-size: 0.8rem;
+  text-align: center;
+  margin: 20vh 1rem 0;
+  a {
+    font-weight: bold;
+    color: rgb(0, 50, 90);
+    font-style: italic;
+  }
+}
+
 @media screen and (min-width: 768px) and (max-width: 1400px) {
-  // .sidenav {
-  //   width: 20vw;
-  // }
   .sidenav-section,
   .s2-1 {
     margin: 2rem 4rem;

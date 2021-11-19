@@ -89,6 +89,14 @@ const Settings = () => {
         toast.success('Your password has been changed succesfully', {
           position: toast.POSITION.TOP_CENTER,
         });
+
+        // Setting state as default after password is changed
+        setOldPassword('');
+        setNewPassword('');
+        setNewPasswordAgain('');
+        setOldPasswordTouched(false);
+        setNewPasswordTouched(false);
+        setNewPasswordAgainTouched(false);
       })
       .catch((err) => {
         console.log(err);

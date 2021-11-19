@@ -19,9 +19,9 @@ const Header = (props) => {
       <div className="nav-section">
         <nav className="nav">
           <ul>
-            <li>
+            {/* <li>
               <FontAwesomeIcon icon="question-circle" />
-            </li>
+            </li> */}
             {/* <li onClick={() => setDropDown(!drpDown)}>
               <FontAwesomeIcon icon="chevron-down" />
               {drpDown && dropDown}

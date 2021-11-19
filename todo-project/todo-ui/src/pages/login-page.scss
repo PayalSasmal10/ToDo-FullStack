@@ -10,10 +10,19 @@
   margin-bottom: 1rem;
 }
 
+.copyright3 {
+  opacity: 0.6;
+  font-size: 0.8rem;
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+}
+
 /** Login Page **/
 .loginPage {
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -30,40 +39,6 @@
   h2 {
     margin-bottom: 3rem;
   }
-}
-
-/** Right part image branding **/
-.brand-section {
-  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
-  min-width: 50vw;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: #000;
-
-  h2 {
-    font-family: 'Caveat', cursive;
-    font-size: 70px;
-  }
-}
-
-.multicolortext {
-  background-image: linear-gradient(
-    to left,
-    violet,
-    indigo,
-    green,
-    blue,
-    yellow,
-    orange,
-    red
-  );
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  background-clip: text;
-  color: transparent;
 }
 
 /** Form styling **/

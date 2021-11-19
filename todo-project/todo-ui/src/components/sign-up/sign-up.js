@@ -80,11 +80,20 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
       })
       .then((response) => {
         console.log(response);
-        console.log(response.statusText);
-        setIsLoading(false);
         toast.success('You have successfully Signed Up!', {
           position: toast.POSITION.TOP_CENTER,
         });
+
+        // Setting state as default after sign up happens successfully
+        setIsLoading(false);
+        setEmail('');
+        setPassword('');
+        setFirstName('');
+        setLastName('');
+        setEmailTouched(false);
+        setPasswordTouched(false);
+        setFirstNameTouched(false);
+        setLastNameTouched(false);
       })
       .catch((err) => {
         console.log(err);
