@@ -7,21 +7,23 @@ const LoginPage = () => {
   const [loginSwitch, setLoginSwitch] = useState(false);
 
   return (
-    <div className="loginPage">
-      <div className="login-section">
-        {!loginSwitch && (
-          <Login loginSwitch={loginSwitch} setLoginSwitch={setLoginSwitch} />
-        )}
-        {loginSwitch && (
-          <SignUp loginSwitch={loginSwitch} setLoginSwitch={setLoginSwitch} />
-        )}
+    <>
+      <div className="loginPage">
+        <div className="login-section">
+          {!loginSwitch && (
+            <Login loginSwitch={loginSwitch} setLoginSwitch={setLoginSwitch} />
+          )}
+          {loginSwitch && (
+            <SignUp loginSwitch={loginSwitch} setLoginSwitch={setLoginSwitch} />
+          )}
+        </div>
       </div>
       <span className="copyright3">
         &copy; {new Date().getFullYear()} &#183; Task Tracker | Made with
         &#10084; by <a href="https://twitter.com/payalsasmal">Payal</a> and{' '}
         <a href="https://twitter.com/TheKrPrince">Prince</a>
       </span>
-    </div>
+    </>
   );
 };
 
