@@ -1,46 +1,30 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Modal from '../UI/Modal/Modal';
 import ToDoListBox from '../UI/ToDoListBox/ToDoListBox';
 import axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AuthContext from '../../store/auth-context';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './project-todo.scss';
 
-const ProjectToDo = (props) => {
+const ProjectToDo = ({
+  todoValues,
+  setTodoValues,
+  getTodoLists,
+  setLoading,
+}) => {
   const [todoTitle, setTodoTitle] = useState('');
   const [todoNote, setTodoNote] = useState('');
   const [status, setStatus] = useState('todo');
   const [isOpen, setIsOpen] = useState(false);
-  const [todoValues, setTodoValues] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [dragCardId, setDragCardId] = useState();
   const [todoId, setTodoId] = useState('');
-  const [todoStatus, setTodoStatus] = useState([
+  const [todoStatus] = useState([
     { value: 'todo', displayValue: 'Todo' },
     { value: 'inprogress', displayValue: 'In Progress' },
     { value: 'completed', displayValue: 'Completed' },
   ]);
 
   const authCtx = useContext(AuthContext);
-
-  // Get request
-  const getTodoLists = () => {
-    axios
-      .get('/task', {
-        headers: {
-          Authorization: `JWT ${authCtx.token}`,
-        },
-      })
-      .then((response) => {
-        setTodoValues(response.data);
-      });
-  };
-
-  useEffect(() => {
-    if (!todoValues || loading) {
-      getTodoLists();
-    }
-  }, []);
 
   // Todo title
   const todoTitleHandler = (e) => {
@@ -130,39 +114,43 @@ const ProjectToDo = (props) => {
     let cardNum = e.target.id;
 
     // Getting the task value using id and then updating the status of that task after element is dropped to another section
-    setTimeout(() => {
-      axios
-        .get(`/task/${dragCardId}`, {
-          headers: {
-            Authorization: `JWT ${authCtx.token}`,
-          },
-        })
-        .then((response) => {
-          axios
-            .put(
-              `/task/${dragCardId}`,
-              {
-                // id: dragCardId,
-                title: response.data.title,
-                description: response.data.description,
-                status:
-                  cardNum === 'card1'
-                    ? 'todo'
-                    : cardNum === 'card2'
-                    ? 'inprogress'
-                    : 'completed',
+    axios
+      .get(`/task/${dragCardId}`, {
+        headers: {
+          Authorization: `JWT ${authCtx.token}`,
+        },
+      })
+      .then((response) => {
+        axios
+          .put(
+            `/task/${dragCardId}`,
+            {
+              title: response.data.title,
+              description: response.data.description,
+              status:
+                cardNum === 'card1'
+                  ? 'todo'
+                  : cardNum === 'card2'
+                  ? 'inprogress'
+                  : 'completed',
+            },
+            {
+              headers: {
+                Authorization: `JWT ${authCtx.token}`,
               },
-              {
-                headers: {
-                  Authorization: `JWT ${authCtx.token}`,
-                },
-              }
-            )
-            .then((response) => {
-              console.log('Data Updated');
+            }
+          )
+          .then((response) => {
+            console.log('Data Updated');
+            return axios.get('/task', {
+              headers: {
+                Authorization: `JWT ${authCtx.token}`,
+              },
             });
-        });
-    }, 1000);
+          })
+          .then((res) => setTodoValues(res.data)) // This line is causing error
+          .catch((err) => console.log(err));
+      });
   };
 
   const dragOver = (e) => {
