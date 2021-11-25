@@ -75,7 +75,7 @@ const Settings = () => {
 
     axios
       .put(
-        '/change-password',
+        'app/change-password',
         {
           old_password: oldPassword,
           new_password: newPasswordAgain,

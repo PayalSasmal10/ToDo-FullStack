@@ -23,7 +23,7 @@ const ToDoListBox = ({
   // Delete handler
   const todoDeleteHandler = () => {
     axios
-      .delete(`/task/${id}`, {
+      .delete(`app/task/${id}`, {
         headers: {
           Authorization: `JWT ${authCtx.token}`,
         },
