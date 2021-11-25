@@ -31,7 +31,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG')
 
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1','tracktask-a.herokuapp.com']
+ALLOWED_HOSTS = ['localhost','127.0.0.1','tasktrackerapps.herokuapp.com']
 
 AUTH_USER_MODEL = 'todoapp.User'
 
