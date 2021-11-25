@@ -2,13 +2,18 @@
 #mysqlclient==2.0.3
 
 # removed sensitive data 
-python-decouple==3.4
 
+python-decouple==3.4
+django-heroku==0.3.1
 django==3.2
 djangorestframework==3.12.4
 pylint-django==2.4.2
 django-cors-headers==3.7.0
 djangorestframework-simplejwt==4.8.0
+gunicorn==20.1.0
+whitenoise==5.2.0
+psycopg2==2.9.1
+dj-database-url==0.5.0
 
 
 
