@@ -10,7 +10,7 @@ import './index.css';
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 
-axios.defaults.baseURL = 'https://tasktrackerapps.heroku.com/app/';
+axios.defaults.baseURL = 'https://tasktrackerapps.herokuapp.com/app/';
 axios.defaults.headers.common['Authorization'] = 'AUTH_TOKEN';
 
 axios.interceptors.request.use(
