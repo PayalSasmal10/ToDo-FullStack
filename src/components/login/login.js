@@ -57,7 +57,7 @@ const Login = ({ loginSwitch, setLoginSwitch }) => {
     setLoading(true);
 
     axios
-      .post('/signin', {
+      .post('app/signin', {
         email: email,
         password: password,
       })
