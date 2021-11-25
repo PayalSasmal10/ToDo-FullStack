@@ -8,7 +8,7 @@ const HomePage = () => {
     <div className="homepage">
       <div className="heading">
         <h1>TASK TRACKER</h1>
-        <Link to="app/login">
+        <Link to="login">
           <button>Login</button>
         </Link>
       </div>
