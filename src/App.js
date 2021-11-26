@@ -5,11 +5,7 @@ import ProjectSection from './pages/project-section';
 import AuthContext from './store/auth-context';
 import './App.css';
 import HomePage from './components/homepage/homepage';
-import axios from 'axios';
 
-
-axios.defaults.xsrfCookieName = 'csrftoken'
-axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 
 function App() {
   const authCtx = useContext(AuthContext);
