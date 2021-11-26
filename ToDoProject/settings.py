@@ -170,6 +170,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+WHITENOISE_USE_FINDERS = True
+
 STATIC_URL = '/static/'
 # location where django collect all static files
 STATIC_ROOT = os.path.join(BASE_DIR,'build','static')
