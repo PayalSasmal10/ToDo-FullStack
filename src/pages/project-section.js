@@ -45,7 +45,7 @@ const ProjectSection = () => {
   // Get all tasks
   const getTodoLists = () => {
     axios
-      .get('/task', {
+      .get('app/task', {
         headers: {
           Authorization: `JWT ${authCtx.token}`,
         },

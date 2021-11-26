@@ -66,7 +66,7 @@ const Login = ({ loginSwitch, setLoginSwitch }) => {
         const token = res.data.tokens['access'];
         authCtx.login(token);
         authCtx.firstNameSetter(res.data.first_name);
-        history.replace('app/task');
+        history.replace('/task');
       })
       .catch((err) => {
         setLoading(false);
