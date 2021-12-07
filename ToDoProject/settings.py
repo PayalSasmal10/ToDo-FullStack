@@ -174,10 +174,10 @@ WHITENOISE_USE_FINDERS = True
 
 STATIC_URL = '/static/'
 # location where django collect all static files
-STATIC_ROOT = os.path.join(BASE_DIR,'build','static')
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 # location where you will store your static files
-STATICFILES_DIRS = [os.path.join(BASE_DIR,'build/static')
-]
+# STATICFILES_DIRS = [os.path.join(BASE_DIR,'build/static')
+# ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
