@@ -148,7 +148,7 @@ const ProjectToDo = ({
               },
             });
           })
-          .then((res) => setTodoValues(res.data)) // This line is causing error
+          // .then((res) => setTodoValues(res.data)) // This line is causing error
           .catch((err) => console.log(err));
       });
   };
