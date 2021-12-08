@@ -6,6 +6,7 @@ import AuthContext from './store/auth-context';
 import './App.css';
 import HomePage from './components/homepage/homepage';
 
+
 function App() {
   const authCtx = useContext(AuthContext);
 

@@ -72,7 +72,7 @@ const SignUp = ({ loginSwitch, setLoginSwitch }) => {
     setIsLoading(true);
 
     axios
-      .post('/signup', {
+      .post('app/signup', {
         email: email,
         first_name: firstName,
         last_name: lastName,

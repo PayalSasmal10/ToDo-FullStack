@@ -48,7 +48,7 @@ const ProjectToDo = ({
     if (!todoId) {
       axios
         .post(
-          '/task',
+          'app/task',
           {
             title: todoTitle,
             description: todoNote,
@@ -71,7 +71,7 @@ const ProjectToDo = ({
     } else {
       axios
         .put(
-          `/task/${todoId}`,
+          `app/task/${todoId}`,
           {
             // id: todoId,
             title: todoTitle,
@@ -115,7 +115,7 @@ const ProjectToDo = ({
 
     // Getting the task value using id and then updating the status of that task after element is dropped to another section
     axios
-      .get(`/task/${dragCardId}`, {
+      .get(`app/task/${dragCardId}`, {
         headers: {
           Authorization: `JWT ${authCtx.token}`,
         },
@@ -123,7 +123,7 @@ const ProjectToDo = ({
       .then((response) => {
         axios
           .put(
-            `/task/${dragCardId}`,
+            `app/task/${dragCardId}`,
             {
               title: response.data.title,
               description: response.data.description,
@@ -142,7 +142,7 @@ const ProjectToDo = ({
           )
           .then((response) => {
             console.log('Data Updated');
-            return axios.get('/task', {
+            return axios.get('app/task', {
               headers: {
                 Authorization: `JWT ${authCtx.token}`,
               },
