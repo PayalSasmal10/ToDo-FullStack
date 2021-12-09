@@ -1,5 +1,9 @@
 .homepage {
   margin: 0.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 95vh;
 }
 
 .heading {
