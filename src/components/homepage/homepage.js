@@ -21,8 +21,22 @@ const HomePage = () => {
       </div>
       <span className="copyright">
         &copy; {new Date().getFullYear()} &#183; Task Tracker | Made with
-        &#10084; by <a href="https://twitter.com/payalsasmal">Payal</a> and{' '}
-        <a href="https://twitter.com/TheKrPrince">Prince</a>
+        &#10084; by{' '}
+        <a
+          href="https://twitter.com/payalsasmal"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Payal
+        </a>{' '}
+        and{' '}
+        <a
+          href="https://twitter.com/TheKrPrince"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Prince
+        </a>
       </span>
     </div>
   );
