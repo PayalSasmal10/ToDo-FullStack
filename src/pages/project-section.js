@@ -59,7 +59,7 @@ const ProjectSection = () => {
     if (!todoValues || loading) {
       getTodoLists();
     }
-  }, [todoValues, loading]);
+  }, []);
 
   return (
     <div className="project-section">
