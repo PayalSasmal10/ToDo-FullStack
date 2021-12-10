@@ -109,8 +109,8 @@ const ProjectToDo = ({
 
   const drop = (e) => {
     e.preventDefault();
-    let data = e.dataTransfer.getData('text');
-    e.target.appendChild(document.getElementById(data));
+    // let data = e.dataTransfer.getData('text');
+    // e.target.appendChild(document.getElementById(data));
     let cardNum = e.target.id;
 
     // Getting the task value using id and then updating the status of that task after element is dropped to another section
@@ -142,11 +142,12 @@ const ProjectToDo = ({
           )
           .then((response) => {
             console.log('Data Updated');
-            return axios.get('app/task', {
-              headers: {
-                Authorization: `JWT ${authCtx.token}`,
-              },
-            });
+            getTodoLists();
+            // return axios.get('app/task', {
+            //   headers: {
+            //     Authorization: `JWT ${authCtx.token}`,
+            //   },
+            // });
           })
           // .then((res) => setTodoValues(res.data)) // This line is causing error
           .catch((err) => console.log(err));
